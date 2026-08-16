@@ -1,0 +1,57 @@
+.group-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+}
+
+.group-card {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.group-card-name {
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.group-card-subject {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  background: var(--color-primary-light);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  width: fit-content;
+}
+
+.group-card-desc {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  flex: 1;
+  min-height: 32px;
+}
+
+.group-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.group-card-members {
+  font-size: 0.78rem;
+  color: var(--color-text-soft);
+}
+
+.groups-toolbar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.groups-toolbar .input {
+  flex: 1;
+}

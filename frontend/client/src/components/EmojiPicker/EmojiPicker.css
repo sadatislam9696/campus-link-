@@ -1,0 +1,50 @@
+.emoji-trigger {
+  background: none;
+  border: none;
+  font-size: 1.15rem;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: var(--radius-sm);
+  line-height: 1;
+}
+
+.emoji-trigger:hover {
+  background: var(--color-bg);
+}
+
+.emoji-popover-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.emoji-popover {
+  position: absolute;
+  bottom: 34px;
+  left: 0;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lift);
+  padding: 10px;
+  width: 240px;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 2px;
+  z-index: 100;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.emoji-popover button {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  line-height: 1;
+}
+
+.emoji-popover button:hover {
+  background: var(--color-bg);
+}

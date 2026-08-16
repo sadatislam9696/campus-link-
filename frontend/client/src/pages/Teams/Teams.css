@@ -1,0 +1,46 @@
+.team-card {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.team-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.team-tag {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+}
+
+.team-name {
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.team-desc {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  flex: 1;
+  min-height: 32px;
+}
+
+.team-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.team-members-count {
+  font-size: 0.78rem;
+  color: var(--color-text-soft);
+}

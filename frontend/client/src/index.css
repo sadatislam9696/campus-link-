@@ -1,0 +1,72 @@
+:root {
+  --color-primary: #6c5ce7;
+  --color-primary-dark: #5541d1;
+  --color-primary-light: #eeebfc;
+  --color-accent: #8b5cf6;
+  --color-text: #0f172a;
+  --color-text-muted: #475569;
+  --color-text-soft: #94a3b8;
+  --color-border: #e2e8f0;
+  --color-bg: #f5f4fb;
+  --color-card: #ffffff;
+  --color-danger: #dc2626;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+  --shadow-card: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.08);
+  --shadow-lift: 0 12px 24px rgba(15, 23, 42, 0.1);
+}
+
+/* Dark mode - toggled by setting data-theme="dark" on <html> */
+[data-theme="dark"] {
+  --color-primary: #8b7cf6;
+  --color-primary-dark: #7565e8;
+  --color-primary-light: #2a2440;
+  --color-accent: #a78bfa;
+  --color-text: #f1f5f9;
+  --color-text-muted: #cbd5e1;
+  --color-text-soft: #7c8497;
+  --color-border: #2d2d3d;
+  --color-bg: #14141f;
+  --color-card: #1c1c2b;
+  --color-danger: #f87171;
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --shadow-lift: 0 12px 24px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .avatar {
+  background: var(--color-primary-light);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  font-family: "Segoe UI", Roboto, Arial, Helvetica, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}

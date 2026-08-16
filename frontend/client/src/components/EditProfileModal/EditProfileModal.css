@@ -1,0 +1,38 @@
+.edit-profile-form label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  margin-bottom: 6px;
+  margin-top: 14px;
+}
+
+.edit-profile-form label:first-of-type {
+  margin-top: 0;
+}
+
+.edit-profile-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.edit-profile-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.edit-profile-avatar-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 6px;
+}
+
+.edit-profile-avatar-row .avatar {
+  width: 64px;
+  height: 64px;
+  font-size: 1.2rem;
+}

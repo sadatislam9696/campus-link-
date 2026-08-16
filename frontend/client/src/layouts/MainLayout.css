@@ -1,0 +1,35 @@
+.main-layout-body {
+  display: flex;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 16px 60px;
+  align-items: flex-start;
+}
+
+.main-layout-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.main-layout-right {
+  width: 260px;
+  flex-shrink: 0;
+}
+
+.trending-card p {
+  padding: 8px 4px;
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.trending-card h3 {
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 960px) {
+  .main-layout-right {
+    display: none;
+  }
+}

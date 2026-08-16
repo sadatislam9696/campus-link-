@@ -1,0 +1,26 @@
+.legal-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.legal-updated {
+  font-size: 0.78rem;
+  color: var(--color-text-soft);
+  margin-bottom: 16px;
+}
+
+.legal-block {
+  margin-bottom: 18px;
+}
+
+.legal-block h3 {
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+}
+
+.legal-block p {
+  font-size: 0.87rem;
+  color: var(--color-text-muted);
+  line-height: 1.65;
+}
