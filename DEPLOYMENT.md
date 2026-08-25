@@ -42,6 +42,14 @@ This doesn't block getting the app running, but avatars/post images will vanish 
 
 Go back to Render and update `CLIENT_URL` to your actual Vercel URL from step 3, then redeploy the backend. This is what the backend uses for CORS (both REST and Socket.io) — until it's set correctly, requests from your deployed frontend will be blocked.
 
+`CLIENT_URL` accepts a **comma-separated list**, so you can allow more than one origin — for example an apex domain plus `www`, or a Vercel preview URL alongside production:
+
+```
+CLIENT_URL=https://campuslink.vercel.app,https://www.campuslink.app
+```
+
+Origins are matched exactly (a trailing slash is ignored). Anything not on the list is rejected.
+
 ## 5. Post-deploy checklist
 
 - [ ] Visit the Vercel URL, register an account, confirm the feed loads (no CORS errors in the browser console)

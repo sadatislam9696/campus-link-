@@ -61,3 +61,43 @@
   gap: 8px;
   flex-shrink: 0;
 }
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 560px) {
+  /* Name block on its own line, actions beneath at full width, so the
+     accept/reject buttons stay comfortably tappable. */
+  .friend-request-row {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .friend-request-info {
+    min-width: 0;
+  }
+
+  .friend-request-actions {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+  }
+
+  .friend-request-actions .btn {
+    flex: 1;
+  }
+
+  .friends-tabs {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .friends-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .friends-tab {
+    flex-shrink: 0;
+  }
+}

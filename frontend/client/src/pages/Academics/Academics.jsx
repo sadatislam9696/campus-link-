@@ -20,7 +20,9 @@ import {
 } from "../../services/projectService";
 
 import MainLayout from "../../layouts/MainLayout";
+import { LoadingState, EmptyState } from "../../components/States/States";
 import "./Academics.css";
+import { FiCalendar, FiFileText, FiCheckSquare, FiFolder } from "react-icons/fi";
 
 const TABS = ["Events", "Notes", "Assignments", "Projects"];
 
@@ -322,12 +324,18 @@ function Academics() {
           </div>
         )}
 
-        {loading && <p className="empty-state">Loading...</p>}
+        {loading && <LoadingState label="Loading..." />}
 
         {/* Events */}
         {!loading && tab === "Events" && (
           <div className="card" style={{ padding: 0 }}>
-            {events.length === 0 && <p className="empty-state">No upcoming events.</p>}
+            {events.length === 0 && (
+              <EmptyState
+                icon={FiCalendar}
+                title="No upcoming events"
+                text="Campus events posted by students and societies will appear here."
+              />
+            )}
             {events.map((ev) => (
               <div key={ev._id} className="item-row">
                 <div className="item-row-top">
@@ -373,7 +381,13 @@ function Academics() {
         {/* Notes */}
         {!loading && tab === "Notes" && (
           <div className="card" style={{ padding: 0 }}>
-            {notes.length === 0 && <p className="empty-state">No notes shared yet.</p>}
+            {notes.length === 0 && (
+              <EmptyState
+                icon={FiFileText}
+                title="No notes shared yet"
+                text="Share your lecture notes and they'll show up here for your course mates."
+              />
+            )}
             {notes.map((n) => (
               <div key={n._id} className="item-row">
                 <div className="item-row-top">
@@ -421,7 +435,13 @@ function Academics() {
         {/* Assignments */}
         {!loading && tab === "Assignments" && (
           <div className="card" style={{ padding: 0 }}>
-            {assignments.length === 0 && <p className="empty-state">No assignments tracked yet.</p>}
+            {assignments.length === 0 && (
+              <EmptyState
+                icon={FiCheckSquare}
+                title="No assignments tracked"
+                text="Add a deadline to keep it on your radar and tick it off when it's done."
+              />
+            )}
             {assignments.map((a) => {
               const overdue = new Date(a.dueDate) < new Date() && !a.isCompleted;
               return (
@@ -473,7 +493,13 @@ function Academics() {
         {/* Projects */}
         {!loading && tab === "Projects" && (
           <div className="card" style={{ padding: 0 }}>
-            {projects.length === 0 && <p className="empty-state">No projects shared yet.</p>}
+            {projects.length === 0 && (
+              <EmptyState
+                icon={FiFolder}
+                title="No projects shared yet"
+                text="Showcase a project or research piece to find collaborators."
+              />
+            )}
             {projects.map((p) => (
               <div key={p._id} className="item-row">
                 <div className="item-row-top">

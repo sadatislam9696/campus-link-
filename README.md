@@ -1,4 +1,3 @@
- /home/claude/proj/CampusLink-main/README.md << 'READMEEOF'
 # 🎓 CampusLink
 
 **A full-stack university social networking platform** where students connect, collaborate, and stay on top of campus life — built with the MERN stack (MongoDB, Express, React, Node.js) and Socket.io for realtime features.
@@ -206,12 +205,3 @@ This project was built as an academic Software Development Project. Add a licens
 ## 🙌 Acknowledgements
 
 Built as a CSE Software Development Project, inspired by the everyday needs of university student life — from sharing lecture notes to finding a lost water bottle.
-READMEEOF
-wc -l /home/claude/proj/CampusLink-main/README.md
-echo "README written successfully"
-Output
-
-207 /home/claude/proj/CampusLink-main/README.md
-README written successfully
-
-You are out of free messages

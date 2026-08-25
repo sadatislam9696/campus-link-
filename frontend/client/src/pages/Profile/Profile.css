@@ -1,14 +1,31 @@
+/* ==========================================================================
+   Profile page
+   --------------------------------------------------------------------------
+   Note: this file previously redefined the global .btn / .btn-primary /
+   .btn-secondary classes and hardcoded light-mode hex colours. Because every
+   stylesheet lands in one bundle, those rules leaked out and restyled buttons
+   on every other page, and the fixed colours ignored dark mode. Everything
+   here is now scoped to .profile-* and driven by design tokens.
+   ========================================================================== */
+
 .profile-page {
-  max-width: 1120px;
-  margin: 0 auto;
-  padding: 24px 16px 40px;
+  width: 100%;
   color: var(--color-text);
+}
+
+/* --- Cover ------------------------------------------------------------- */
+
+/* The cover clips its own image, but the avatar deliberately overhangs the
+   bottom edge - so the avatar is a sibling positioned against this wrapper
+   rather than a child of the clipped cover. */
+.profile-hero {
+  position: relative;
 }
 
 .profile-cover {
   position: relative;
-  min-height: 280px;
-  border-radius: 28px;
+  min-height: 240px;
+  border-radius: var(--radius-xl);
   overflow: hidden;
   background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
 }
@@ -46,140 +63,159 @@
 .profile-avatar {
   position: absolute;
   left: 32px;
-  bottom: -48px;
-  width: 110px;
-  height: 110px;
+  bottom: -44px;
+  width: 104px;
+  height: 104px;
   border-radius: 50%;
-  border: 6px solid #fff;
+  border: 5px solid var(--color-card);
   background: var(--color-card);
   color: var(--color-primary);
   display: grid;
   place-items: center;
-  font-size: 2.2rem;
+  font-size: 2rem;
   font-weight: 700;
-  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.16);
+  overflow: hidden;
+  box-shadow: var(--shadow-lift);
 }
 
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* --- Summary ------------------------------------------------------------ */
+
 .profile-summary {
-  margin-top: 72px;
+  margin-top: 60px;
   display: flex;
   justify-content: space-between;
-  gap: 24px;
+  gap: 20px;
   flex-wrap: wrap;
   align-items: flex-start;
 }
 
 .profile-title {
   min-width: 220px;
+  flex: 1;
 }
 
 .profile-title h1 {
-  font-size: clamp(2rem, 2.5vw, 2.7rem);
-  margin-bottom: 0.5rem;
+  font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.2rem);
+  margin-bottom: 0.35rem;
   letter-spacing: -0.03em;
 }
 
 .profile-subtitle {
   margin: 0;
-  color: #475569;
-  font-size: 1rem;
+  color: var(--color-text-muted);
+  font-size: 0.96rem;
   line-height: 1.6;
 }
 
 .profile-actions {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   flex-wrap: wrap;
-  margin-top: 8px;
+  margin-top: 4px;
 }
 
-.btn {
-  border: none;
-  border-radius: 999px;
-  padding: 0.85rem 1.5rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
-}
-
-.btn:hover {
-  transform: translateY(-1px);
-}
-
-.btn-primary {
-  background: var(--color-primary);
-  color: #fff;
-  box-shadow: 0 12px 24px rgba(108, 92, 231, 0.18);
-}
-
-.btn-secondary {
-  background: #f8fafc;
-  color: var(--color-text);
-  border: 1px solid #cbd5e1;
-}
-
+/* Page-local button variant kept for the profile action row only. */
 .btn-tertiary {
-  background: #e2e8f0;
+  background: var(--color-bg-subtle);
   color: var(--color-text);
+  border: 1px solid var(--color-border);
 }
+
+.btn-tertiary:not(:disabled):hover {
+  background: var(--color-card-hover);
+  border-color: var(--color-border-strong);
+}
+
+/* --- Tabs --------------------------------------------------------------- */
 
 .profile-navigation {
-  margin-top: 22px;
+  /* Own row: .profile-summary is a wrapping flex row, and without this the
+     tabs sit beside the action buttons instead of below the identity block. */
+  flex-basis: 100%;
+  margin-top: 20px;
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 2px;
+}
+
+.profile-navigation::-webkit-scrollbar {
+  display: none;
 }
 
 .profile-nav-item {
   appearance: none;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  border-radius: 999px;
-  padding: 0.85rem 1.2rem;
+  flex-shrink: 0;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  padding: 0.55rem 1.1rem;
   color: var(--color-text-muted);
   font-weight: 600;
+  font-size: 0.88rem;
   cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  white-space: nowrap;
+  transition: background-color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
 }
 
 .profile-nav-item:hover {
-  background-color: var(--color-primary-light);
-  border-color: #ddd6fe;
+  background: var(--color-bg-subtle);
+  color: var(--color-text);
+  border-color: var(--color-border-strong);
 }
 
+.profile-nav-item.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+
+/* --- Body --------------------------------------------------------------- */
+
 .profile-body {
-  margin-top: 32px;
+  margin-top: 26px;
   display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  gap: 24px;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
 }
 
 .profile-column,
 .profile-sidebar {
   display: grid;
-  gap: 24px;
+  gap: 20px;
+  min-width: 0;
 }
 
 .profile-card {
   background: var(--color-card);
-  border-radius: 24px;
-  padding: 24px;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 16px 30px rgba(15, 23, 42, 0.08);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
 }
 
 .profile-card h2 {
   margin: 0 0 14px;
-  font-size: 1.25rem;
+  font-size: 1.08rem;
   letter-spacing: -0.02em;
   color: var(--color-text);
 }
 
 .profile-card p,
 .profile-card li {
-  color: #475569;
-  line-height: 1.8;
-  font-size: 0.96rem;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  font-size: 0.93rem;
 }
 
 .profile-list {
@@ -191,35 +227,37 @@
 }
 
 .profile-list li {
-  padding: 14px 16px;
-  border-radius: 16px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--color-border);
 }
 
 .profile-metrics {
   display: grid;
-  gap: 14px;
+  gap: 12px;
 }
 
 .profile-metric {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 16px;
-  border-radius: 18px;
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
+  gap: 12px;
+  padding: 13px 15px;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--color-border);
 }
 
 .profile-metric strong {
   display: block;
   color: var(--color-text);
-  margin-bottom: 4px;
+  margin-bottom: 2px;
+  font-size: 0.9rem;
 }
 
 .profile-metric span {
-  color: var(--color-text-muted);
+  color: var(--color-primary);
   font-weight: 700;
   font-size: 1.05rem;
 }
@@ -233,28 +271,70 @@
   font-weight: 700;
 }
 
+.profile-link:hover {
+  text-decoration: underline;
+}
+
+/* --- Skill chips -------------------------------------------------------- */
+
+.profile-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.profile-skill {
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
 @media (max-width: 900px) {
   .profile-body {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
-@media (max-width: 720px) {
-  .profile-page {
-    padding: 18px 12px 32px;
+@media (max-width: 640px) {
+  .profile-cover {
+    min-height: 170px;
+    border-radius: var(--radius-lg);
   }
 
+  /* Centre the avatar on a phone - a left-anchored one crowds the name. */
   .profile-avatar {
     left: 50%;
     transform: translateX(-50%);
+    bottom: -38px;
+    width: 88px;
+    height: 88px;
+    font-size: 1.7rem;
   }
 
   .profile-summary {
-    margin-top: 60px;
+    margin-top: 52px;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .profile-title {
+    min-width: 0;
+    width: 100%;
   }
 
   .profile-actions {
     width: 100%;
-    justify-content: flex-start;
+    justify-content: center;
+  }
+
+  .profile-card {
+    padding: 18px;
   }
 }

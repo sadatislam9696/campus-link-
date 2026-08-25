@@ -14,6 +14,7 @@ import {
 } from "../../services/adminService";
 
 import MainLayout from "../../layouts/MainLayout";
+import { LoadingState } from "../../components/States/States";
 import "./Admin.css";
 
 import { API_URL } from "../../config";
@@ -139,7 +140,7 @@ function Admin() {
   };
 
   return (
-    <MainLayout hideSidebar rightPanel={<div />}>
+    <MainLayout rightPanel={null}>
       <div>
         <h1 className="feed-heading">Admin Panel</h1>
 
@@ -157,7 +158,7 @@ function Admin() {
         </div>
 
         {actionError && <p className="error-text">{actionError}</p>}
-        {loading && <p className="empty-state">Loading...</p>}
+        {loading && <LoadingState label="Loading..." />}
 
         {!loading && tab === "Overview" && stats && (
           <div className="admin-stats-grid">
@@ -204,60 +205,62 @@ function Admin() {
               />
             </form>
 
-            <table className="admin-table">
-              <thead>
-                <tr>
-                  <th>User</th>
-                  <th>Email</th>
-                  <th>Status</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {users.map((u) => (
-                  <tr key={u._id}>
-                    <td>
-                      <div className="admin-row-user">
-                        <MiniAvatar user={u} />
-                        <div>
-                          {u.firstName} {u.lastName}
-                          <div style={{ fontSize: "0.75rem", color: "var(--color-text-soft)" }}>
-                            @{u.username}
+            <div className="admin-table-wrap">
+              <table className="admin-table">
+                <thead>
+                  <tr>
+                    <th>User</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {users.map((u) => (
+                    <tr key={u._id}>
+                      <td>
+                        <div className="admin-row-user">
+                          <MiniAvatar user={u} />
+                          <div>
+                            {u.firstName} {u.lastName}
+                            <div style={{ fontSize: "0.75rem", color: "var(--color-text-soft)" }}>
+                              @{u.username}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </td>
-                    <td>{u.email}</td>
-                    <td>
-                      {u.role === "admin" && <span className="admin-badge admin">ADMIN</span>}{" "}
-                      <span className={`admin-badge ${u.isActive ? "active" : "banned"}`}>
-                        {u.isActive ? "Active" : "Banned"}
-                      </span>
-                    </td>
-                    <td>
-                      {u.role !== "admin" && (
-                        <div style={{ display: "flex", gap: 6 }}>
-                          <button
-                            type="button"
-                            className="btn btn-ghost btn-sm"
-                            onClick={() => handleToggleBan(u._id)}
-                          >
-                            {u.isActive ? "Ban" : "Unban"}
-                          </button>
-                          <button
-                            type="button"
-                            className="btn btn-danger btn-sm"
-                            onClick={() => handleDeleteUser(u._id)}
-                          >
-                            Delete
-                          </button>
-                        </div>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                      </td>
+                      <td>{u.email}</td>
+                      <td>
+                        {u.role === "admin" && <span className="admin-badge admin">ADMIN</span>}{" "}
+                        <span className={`admin-badge ${u.isActive ? "active" : "banned"}`}>
+                          {u.isActive ? "Active" : "Banned"}
+                        </span>
+                      </td>
+                      <td>
+                        {u.role !== "admin" && (
+                          <div style={{ display: "flex", gap: 6 }}>
+                            <button
+                              type="button"
+                              className="btn btn-ghost btn-sm"
+                              onClick={() => handleToggleBan(u._id)}
+                            >
+                              {u.isActive ? "Ban" : "Unban"}
+                            </button>
+                            <button
+                              type="button"
+                              className="btn btn-danger btn-sm"
+                              onClick={() => handleDeleteUser(u._id)}
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
 
             {users.length === 0 && <p className="empty-state">No users found.</p>}
           </div>
@@ -265,41 +268,43 @@ function Admin() {
 
         {!loading && tab === "Posts" && (
           <div className="card">
-            <table className="admin-table">
-              <thead>
-                <tr>
-                  <th>Author</th>
-                  <th>Content</th>
-                  <th>Likes</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {posts.map((p) => (
-                  <tr key={p._id}>
-                    <td>
-                      <div className="admin-row-user">
-                        <MiniAvatar user={p.author} />
-                        <div>{p.author?.firstName} {p.author?.lastName}</div>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="admin-report-content">{p.content}</div>
-                    </td>
-                    <td>{p.likes?.length || 0}</td>
-                    <td>
-                      <button
-                        type="button"
-                        className="btn btn-danger btn-sm"
-                        onClick={() => handleDeletePost(p._id)}
-                      >
-                        Remove
-                      </button>
-                    </td>
+            <div className="admin-table-wrap">
+              <table className="admin-table">
+                <thead>
+                  <tr>
+                    <th>Author</th>
+                    <th>Content</th>
+                    <th>Likes</th>
+                    <th>Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {posts.map((p) => (
+                    <tr key={p._id}>
+                      <td>
+                        <div className="admin-row-user">
+                          <MiniAvatar user={p.author} />
+                          <div>{p.author?.firstName} {p.author?.lastName}</div>
+                        </div>
+                      </td>
+                      <td>
+                        <div className="admin-report-content">{p.content}</div>
+                      </td>
+                      <td>{p.likes?.length || 0}</td>
+                      <td>
+                        <button
+                          type="button"
+                          className="btn btn-danger btn-sm"
+                          onClick={() => handleDeletePost(p._id)}
+                        >
+                          Remove
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
 
             {posts.length === 0 && <p className="empty-state">No posts found.</p>}
           </div>
@@ -311,40 +316,42 @@ function Admin() {
               <p className="empty-state">No pending reports — all clear!</p>
             )}
 
-            <table className="admin-table">
-              <tbody>
-                {reports.map((r) => (
-                  <tr key={r._id}>
-                    <td>
-                      <span className="admin-badge banned" style={{ textTransform: "uppercase" }}>
-                        {r.targetType}
-                      </span>
-                    </td>
-                    <td>
-                      <div className="admin-report-content">
-                        {r.targetType === "post"
-                          ? r.target?.content || "(post deleted)"
-                          : `@${r.target?.username || "unknown"}`}
-                      </div>
-                    </td>
-                    <td>
-                      <div className="admin-report-content">
-                        Reported by @{r.reporter?.username}: {r.reason}
-                      </div>
-                    </td>
-                    <td>
-                      <button
-                        type="button"
-                        className="btn btn-primary btn-sm"
-                        onClick={() => handleResolveReport(r._id)}
-                      >
-                        Mark Resolved
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <div className="admin-table-wrap">
+              <table className="admin-table">
+                <tbody>
+                  {reports.map((r) => (
+                    <tr key={r._id}>
+                      <td>
+                        <span className="admin-badge banned" style={{ textTransform: "uppercase" }}>
+                          {r.targetType}
+                        </span>
+                      </td>
+                      <td>
+                        <div className="admin-report-content">
+                          {r.targetType === "post"
+                            ? r.target?.content || "(post deleted)"
+                            : `@${r.target?.username || "unknown"}`}
+                        </div>
+                      </td>
+                      <td>
+                        <div className="admin-report-content">
+                          Reported by @{r.reporter?.username}: {r.reason}
+                        </div>
+                      </td>
+                      <td>
+                        <button
+                          type="button"
+                          className="btn btn-primary btn-sm"
+                          onClick={() => handleResolveReport(r._id)}
+                        >
+                          Mark Resolved
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
       </div>

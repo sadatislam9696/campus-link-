@@ -3,6 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 
 import { search } from "../../services/searchService";
 import MainLayout from "../../layouts/MainLayout";
+import { LoadingState } from "../../components/States/States";
 import "./Search.css";
 
 import { API_URL } from "../../config";
@@ -65,7 +66,7 @@ function Search() {
       // eslint-disable-next-line react-hooks/set-state-in-effect
       runSearch(initialQuery);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+     
   }, [initialQuery]);
 
   const handleSubmit = (e) => {
@@ -110,7 +111,7 @@ function Search() {
           </div>
         )}
 
-        {loading && <p className="empty-state">Searching...</p>}
+        {loading && <LoadingState label="Searching..." />}
 
         {!loading && searched && tab === "users" && (
           <div className="card">

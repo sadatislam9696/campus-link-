@@ -1,15 +1,17 @@
 .chat-shell {
   display: flex;
-  height: calc(100vh - 64px - 40px);
+  /* Fills the viewport below the sticky navbar, minus the shell gutters. */
+  height: calc(100vh - var(--nav-height) - var(--gutter) * 2);
   min-height: 480px;
   background: var(--color-card);
-  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
   overflow: hidden;
 }
 
 .chat-list {
-  width: 300px;
+  width: 310px;
   flex-shrink: 0;
   border-right: 1px solid var(--color-border);
   overflow-y: auto;
@@ -32,9 +34,12 @@
   position: relative;
 }
 
-.chat-list-item:hover,
+.chat-list-item:hover {
+  background: var(--color-card-hover);
+}
+
 .chat-list-item.active {
-  background: var(--color-bg);
+  background: var(--color-primary-light);
 }
 
 .chat-list-item .avatar {
@@ -48,7 +53,7 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: #22c55e;
+  background: var(--color-success);
   border: 2px solid var(--color-card);
   position: absolute;
   bottom: 0;
@@ -158,7 +163,7 @@
 }
 
 .chat-bubble-row:not(.mine) .chat-bubble {
-  background: var(--color-bg);
+  background: var(--color-bg-subtle);
   border-bottom-left-radius: 4px;
 }
 
@@ -215,7 +220,9 @@
 }
 
 .chat-bubble-menu-dropdown button {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   width: 100%;
   text-align: left;
   padding: 8px 12px;
@@ -227,7 +234,7 @@
 }
 
 .chat-bubble-menu-dropdown button:hover {
-  background: var(--color-bg);
+  background: var(--color-bg-subtle);
 }
 
 .chat-bubble-edit-row {
@@ -267,4 +274,82 @@
   color: var(--color-text-muted);
   flex-direction: column;
   gap: 8px;
+}
+
+/* Back-to-list control - only meaningful in the mobile master/detail view. */
+.chat-back-btn {
+  display: none;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  margin-left: -4px;
+  border-radius: var(--radius-md);
+  color: var(--color-text-muted);
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.chat-back-btn:hover {
+  background: var(--color-bg-subtle);
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 1023px) {
+  .chat-list {
+    width: 260px;
+  }
+
+  .chat-bubble-content,
+  .chat-bubble-edit-row {
+    max-width: 78%;
+  }
+}
+
+/* Phone: one pane at a time. The list is the default view; picking a
+   conversation swaps in the thread, and the back button returns. */
+@media (max-width: 767px) {
+  .chat-shell {
+    height: calc(100vh - var(--nav-height) - 92px);
+    min-height: 0;
+    border-radius: var(--radius-md);
+  }
+
+  .chat-list {
+    width: 100%;
+    border-right: none;
+  }
+
+  .chat-shell.has-active .chat-list {
+    display: none;
+  }
+
+  .chat-shell:not(.has-active) .chat-thread {
+    display: none;
+  }
+
+  .chat-back-btn {
+    display: grid;
+  }
+
+  .chat-bubble-content,
+  .chat-bubble-edit-row {
+    max-width: 85%;
+  }
+
+  .chat-messages {
+    padding: 14px;
+  }
+
+  .chat-input-row {
+    padding: 10px;
+  }
+
+  /* The message menu is hover-revealed on desktop; touch has no hover, so
+     keep it permanently visible here. */
+  .chat-bubble-menu-btn {
+    opacity: 1;
+  }
 }

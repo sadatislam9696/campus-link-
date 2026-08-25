@@ -1,6 +1,6 @@
 .lf-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
   gap: 14px;
 }
 
@@ -42,13 +42,13 @@
 }
 
 .lf-badge.lost {
-  background: #fee2e2;
+  background: var(--color-danger-bg);
   color: var(--color-danger);
 }
 
 .lf-badge.found {
-  background: #dcfce7;
-  color: #16a34a;
+  background: var(--color-success-bg);
+  color: var(--color-success);
 }
 
 .lf-badge.resolved {
@@ -72,4 +72,18 @@
   display: flex;
   gap: 6px;
   margin-top: 12px;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 640px) {
+  .lf-grid {
+    gap: 12px;
+  }
+
+  .lf-card {
+    padding: 16px;
+  }
 }

@@ -1,49 +1,106 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import {
+  FiHome,
+  FiUser,
+  FiUsers,
+  FiBookOpen,
+  FiMessageSquare,
+  FiAward,
+  FiMic,
+  FiPackage,
+  FiSend,
+  FiBell,
+  FiSearch,
+  FiShield,
+  FiHelpCircle,
+  FiSettings,
+} from "react-icons/fi";
 
 import { AuthContext } from "../../context/AuthContext";
 import "./Sidebar.css";
 
-const links = [
-  { to: "/dashboard", label: "Feed", icon: "🏠" },
-  { to: "/profile", label: "My Profile", icon: "👤" },
-  { to: "/friends", label: "Friends", icon: "👥" },
-  { to: "/groups", label: "Groups & Clubs", icon: "📚" },
-  { to: "/teams", label: "Teams", icon: "🧑‍🤝‍🧑" },
-  { to: "/discussions", label: "Discussions", icon: "🗣️" },
-  { to: "/academics", label: "Academics", icon: "🎓" },
-  { to: "/confessions", label: "Confessions & Polls", icon: "🎭" },
-  { to: "/lost-found", label: "Lost & Found", icon: "🧳" },
-  { to: "/chat", label: "Messages", icon: "💬" },
-  { to: "/notifications", label: "Notifications", icon: "🔔" },
-  { to: "/search", label: "Search", icon: "🔍" },
+// Grouped so the nav reads as a product with sections rather than one long
+// undifferentiated list of twelve links.
+const sections = [
+  {
+    heading: "Campus",
+    links: [
+      { to: "/dashboard", label: "Feed", icon: FiHome },
+      { to: "/profile", label: "My Profile", icon: FiUser },
+      { to: "/friends", label: "Friends", icon: FiUsers },
+      { to: "/search", label: "Search", icon: FiSearch },
+    ],
+  },
+  {
+    heading: "Community",
+    links: [
+      { to: "/groups", label: "Groups & Clubs", icon: FiBookOpen },
+      { to: "/teams", label: "Teams", icon: FiAward },
+      { to: "/discussions", label: "Discussions", icon: FiMessageSquare },
+      { to: "/confessions", label: "Confessions", icon: FiMic },
+      { to: "/lost-found", label: "Lost & Found", icon: FiPackage },
+    ],
+  },
+  {
+    heading: "Academics",
+    links: [
+      { to: "/academics", label: "Notes & Events", icon: FiBookOpen },
+    ],
+  },
+  {
+    heading: "Inbox",
+    links: [
+      { to: "/chat", label: "Messages", icon: FiSend },
+      { to: "/notifications", label: "Notifications", icon: FiBell },
+    ],
+  },
 ];
 
-function Sidebar() {
+function Sidebar({ onNavigate }) {
   const { user } = useContext(AuthContext);
 
-  return (
-    <aside className="sidebar">
-      <p className="sidebar-heading">Menu</p>
+  // "My Profile" is the only link whose target depends on who's signed in.
+  const resolve = (to) =>
+    to === "/profile" && user ? `/profile/${user.username}` : to;
 
-      {links.map((link) => (
-        <Link
-          key={link.label}
-          to={link.to === "/profile" && user ? `/profile/${user.username}` : link.to}
-          className="sidebar-link"
-        >
-          <span className="sidebar-link-icon">{link.icon}</span>
-          {link.label}
-        </Link>
+  const renderLink = ({ to, label, icon: Icon }) => (
+    <NavLink
+      key={label}
+      to={resolve(to)}
+      className={({ isActive }) =>
+        `sidebar-link${isActive ? " active" : ""}`
+      }
+      onClick={onNavigate}
+    >
+      <Icon className="sidebar-link-icon" aria-hidden="true" />
+      <span className="sidebar-link-label">{label}</span>
+    </NavLink>
+  );
+
+  return (
+    <nav className="sidebar" aria-label="Main navigation">
+      {sections.map((section) => (
+        <div className="sidebar-section" key={section.heading}>
+          <p className="sidebar-heading">{section.heading}</p>
+          {section.links.map(renderLink)}
+        </div>
       ))}
 
-      {user?.role === "admin" && (
-        <Link to="/admin" className="sidebar-link">
-          <span className="sidebar-link-icon">🛠</span>
-          Admin Panel
-        </Link>
-      )}
-    </aside>
+      <div className="sidebar-section">
+        <p className="sidebar-heading">Account</p>
+
+        {renderLink({ to: "/settings", label: "Settings", icon: FiSettings })}
+        {renderLink({ to: "/help", label: "Help & Support", icon: FiHelpCircle })}
+
+        {user?.role === "admin" &&
+          renderLink({ to: "/admin", label: "Admin Panel", icon: FiShield })}
+      </div>
+
+      <p className="sidebar-footnote">
+        CampusLink &copy; {new Date().getFullYear()}
+      </p>
+    </nav>
   );
 }
 

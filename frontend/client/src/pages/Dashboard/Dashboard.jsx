@@ -16,8 +16,21 @@ import {
   deleteComment,
 } from "../../services/commentService";
 
+import {
+  FiMessageSquare,
+  FiCalendar,
+  FiHelpCircle,
+  FiVolume2,
+  FiImage,
+  FiVideo,
+  FiPaperclip,
+  FiBarChart2,
+  FiX,
+} from "react-icons/fi";
+
 import { AuthContext } from "../../context/AuthContext";
 import MainLayout from "../../layouts/MainLayout";
+import { LoadingState, EmptyState, ErrorState } from "../../components/States/States";
 import PostCard from "../../components/PostCard/PostCard";
 import EmojiPicker from "../../components/EmojiPicker/EmojiPicker";
 import "./Dashboard.css";
@@ -36,6 +49,8 @@ const Dashboard = () => {
   const [docFile, setDocFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [postsLoading, setPostsLoading] = useState(true);
+  const [feedError, setFeedError] = useState("");
+  const [submitError, setSubmitError] = useState("");
   const [loadingMore, setLoadingMore] = useState(false);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(false);
@@ -56,6 +71,7 @@ const Dashboard = () => {
   // ============================
   const loadPosts = async (category = feedFilter) => {
     try {
+      setFeedError("");
       const data = await getPosts(1, category);
       setPosts(data.posts);
       setPage(1);
@@ -66,6 +82,10 @@ const Dashboard = () => {
       });
     } catch (error) {
       console.error(error);
+      setFeedError(
+        error?.response?.data?.message ||
+          "We couldn't load the feed. Check your connection and try again."
+      );
     } finally {
       setPostsLoading(false);
     }
@@ -193,6 +213,7 @@ const Dashboard = () => {
 
     try {
       setLoading(true);
+      setSubmitError("");
 
       const formData = new FormData();
       formData.append("content", content);
@@ -220,6 +241,10 @@ const Dashboard = () => {
       loadPosts(feedFilter);
     } catch (error) {
       console.error(error);
+      setSubmitError(
+        error?.response?.data?.message ||
+          "Your post couldn't be published. Please try again."
+      );
     } finally {
       setLoading(false);
     }
@@ -322,10 +347,10 @@ const Dashboard = () => {
         <div className="tab-group">
           {[
             { value: "", label: "All" },
-            { value: "general", label: "💬 General" },
-            { value: "event", label: "📅 Events" },
-            { value: "question", label: "❓ Questions" },
-            { value: "announcement", label: "📢 Announcements" },
+            { value: "general", label: "General", icon: FiMessageSquare },
+            { value: "event", label: "Events", icon: FiCalendar },
+            { value: "question", label: "Questions", icon: FiHelpCircle },
+            { value: "announcement", label: "Announcements", icon: FiVolume2 },
           ].map((f) => (
             <button
               key={f.value}
@@ -333,6 +358,7 @@ const Dashboard = () => {
               className={`tab-pill ${feedFilter === f.value ? "active" : ""}`}
               onClick={() => setFeedFilter(f.value)}
             >
+              {f.icon && <f.icon aria-hidden="true" />}
               {f.label}
             </button>
           ))}
@@ -343,10 +369,10 @@ const Dashboard = () => {
           <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10, flexWrap: "wrap", gap: 8 }}>
             <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
               {[
-                { value: "general", label: "💬 General" },
-                { value: "event", label: "📅 Event" },
-                { value: "question", label: "❓ Question" },
-                { value: "announcement", label: "📢 Announcement" },
+                { value: "general", label: "General", icon: FiMessageSquare },
+                { value: "event", label: "Event", icon: FiCalendar },
+                { value: "question", label: "Question", icon: FiHelpCircle },
+                { value: "announcement", label: "Announcement", icon: FiVolume2 },
               ].map((c) => (
                 <button
                   key={c.value}
@@ -354,6 +380,7 @@ const Dashboard = () => {
                   className={`btn btn-sm ${postCategory === c.value ? "btn-primary" : "btn-ghost"}`}
                   onClick={() => setPostCategory(c.value)}
                 >
+                  <c.icon aria-hidden="true" />
                   {c.label}
                 </button>
               ))}
@@ -376,8 +403,9 @@ const Dashboard = () => {
                 type="button"
                 className="btn btn-ghost btn-sm"
                 onClick={clearImage}
+                aria-label="Remove image"
               >
-                ✕
+                <FiX aria-hidden="true" />
               </button>
             </div>
           )}
@@ -385,17 +413,17 @@ const Dashboard = () => {
           {video && (
             <div className="create-post-preview">
               <video src={videoPreview} controls style={{ width: "100%", maxHeight: 260 }} />
-              <button type="button" className="btn btn-ghost btn-sm" onClick={clearVideo}>
-                ✕
+              <button type="button" className="btn btn-ghost btn-sm" onClick={clearVideo} aria-label="Remove video">
+                <FiX aria-hidden="true" />
               </button>
             </div>
           )}
 
           {docFile && (
             <div className="create-post-doc-chip">
-              📎 {docFile.name}
-              <button type="button" className="btn btn-ghost btn-sm" onClick={clearDoc}>
-                ✕
+              <FiPaperclip aria-hidden="true" /> {docFile.name}
+              <button type="button" className="btn btn-ghost btn-sm" onClick={clearDoc} aria-label="Remove document">
+                <FiX aria-hidden="true" />
               </button>
             </div>
           )}
@@ -420,8 +448,8 @@ const Dashboard = () => {
                     onChange={(e) => updatePollOption(i, e.target.value)}
                   />
                   {pollOptions.length > 2 && (
-                    <button type="button" className="btn btn-ghost btn-sm" onClick={() => removePollOption(i)}>
-                      ✕
+                    <button type="button" className="btn btn-ghost btn-sm" onClick={() => removePollOption(i)} aria-label="Remove poll option">
+                      <FiX aria-hidden="true" />
                     </button>
                   )}
                 </div>
@@ -442,7 +470,7 @@ const Dashboard = () => {
           <div className="create-post-footer">
             <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
               <label className="create-post-file-label">
-                🖼️ Add photo
+                <FiImage aria-hidden="true" /> Add photo
                 <input
                   ref={fileInputRef}
                   type="file"
@@ -452,7 +480,7 @@ const Dashboard = () => {
               </label>
 
               <label className="create-post-file-label">
-                🎥 Add video
+                <FiVideo aria-hidden="true" /> Add video
                 <input
                   ref={videoInputRef}
                   type="file"
@@ -462,7 +490,7 @@ const Dashboard = () => {
               </label>
 
               <label className="create-post-file-label">
-                📎 Add document
+                <FiPaperclip aria-hidden="true" /> Add document
                 <input
                   ref={docInputRef}
                   type="file"
@@ -477,7 +505,7 @@ const Dashboard = () => {
                   className="create-post-file-label"
                   onClick={() => setShowPoll(true)}
                 >
-                  📊 Add poll
+                  <FiBarChart2 aria-hidden="true" /> Add poll
                 </button>
               )}
             </div>
@@ -490,15 +518,23 @@ const Dashboard = () => {
               {loading ? <span className="spinner" /> : "Post"}
             </button>
           </div>
+
+          {submitError && <p className="error-text" style={{ marginTop: 12 }}>{submitError}</p>}
         </form>
 
         {/* Feed */}
-        {postsLoading && <p className="empty-state">Loading feed...</p>}
+        {postsLoading && <LoadingState label="Loading feed..." />}
 
-        {!postsLoading && posts.length === 0 && (
-          <p className="empty-state">
-            No posts yet — be the first to share something!
-          </p>
+        {!postsLoading && feedError && (
+          <ErrorState message={feedError} onRetry={() => loadPosts(feedFilter)} />
+        )}
+
+        {!postsLoading && !feedError && posts.length === 0 && (
+          <EmptyState
+            icon={FiMessageSquare}
+            title="No posts yet"
+            text="Be the first to share something with your campus."
+          />
         )}
 
         {posts.map((post) => (

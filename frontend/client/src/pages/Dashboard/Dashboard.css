@@ -71,3 +71,31 @@
   margin-bottom: 12px;
   font-size: 0.85rem;
 }
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 640px) {
+  .create-post-footer {
+    gap: 8px;
+  }
+
+  /* Attachment chips wrap to their own row and share the width evenly
+     instead of overflowing the composer. */
+  .create-post-footer > div:first-child {
+    flex: 1 1 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .create-post-file-label {
+    font-size: 0.8rem;
+    padding: 6px 8px;
+  }
+
+  .feed-heading {
+    font-size: 1.25rem;
+  }
+}

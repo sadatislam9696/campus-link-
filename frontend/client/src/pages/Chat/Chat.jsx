@@ -1,5 +1,15 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import {
+  FiChevronLeft,
+  FiUsers,
+  FiUserPlus,
+  FiMessageCircle,
+  FiMoreHorizontal,
+  FiEdit2,
+  FiTrash2,
+  FiX,
+} from "react-icons/fi";
 
 import { SocketContext } from "../../context/SocketContext";
 import { AuthContext } from "../../context/AuthContext";
@@ -16,6 +26,7 @@ import {
 import { getFriendsList } from "../../services/friendService";
 
 import MainLayout from "../../layouts/MainLayout";
+import { LoadingState } from "../../components/States/States";
 import "./Chat.css";
 
 import { API_URL } from "../../config";
@@ -30,7 +41,7 @@ function Avatar({ user, online, isGroup }) {
   if (isGroup) {
     return (
       <div className="avatar" style={{ background: "var(--color-primary-light)" }}>
-        🧑‍🤝‍🧑
+        <FiUsers aria-hidden="true" />
       </div>
     );
   }
@@ -186,7 +197,7 @@ function Chat() {
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     loadConversations();
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+     
     loadGroupChats();
   }, []);
 
@@ -239,7 +250,7 @@ function Chat() {
       }
     };
 
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+     
     openThread();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [username, groupId, socket, conversations.length]);
@@ -280,7 +291,7 @@ function Chat() {
       }
     };
 
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+     
     loadThread();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active?._id, activeType]);
@@ -503,13 +514,19 @@ function Chat() {
   ].sort((a, b) => new Date(b.lastMessageAt || 0) - new Date(a.lastMessageAt || 0));
 
   return (
-    <MainLayout hideSidebar rightPanel={<div />}>
-      <div className="chat-shell">
+    <MainLayout rightPanel={null}>
+      <div className={`chat-shell${active ? " has-active" : ""}`}>
         <aside className="chat-list">
           <div className="chat-list-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             Messages
-            <button type="button" className="btn btn-ghost btn-sm" onClick={() => setShowNewGroup(true)} title="New group">
-              +👥
+            <button
+              type="button"
+              className="btn btn-ghost btn-sm"
+              onClick={() => setShowNewGroup(true)}
+              title="New group"
+              aria-label="New group chat"
+            >
+              <FiUserPlus aria-hidden="true" />
             </button>
           </div>
 
@@ -540,12 +557,21 @@ function Chat() {
         <section className="chat-thread">
           {!active ? (
             <div className="chat-empty">
-              <span style={{ fontSize: "2rem" }}>💬</span>
+              <span className="empty-state-icon"><FiMessageCircle aria-hidden="true" /></span>
               <p>Select a conversation to start chatting.</p>
             </div>
           ) : (
             <>
               <div className="chat-thread-header">
+                <button
+                  type="button"
+                  className="chat-back-btn"
+                  onClick={() => navigate("/chat")}
+                  aria-label="Back to conversations"
+                >
+                  <FiChevronLeft />
+                </button>
+
                 <Avatar user={active} isGroup={activeType === "group"} online={activeType === "direct" && onlineUsers.includes(active._id)} />
                 <div style={{ flex: 1 }}>
                   <div className="chat-thread-name">
@@ -565,10 +591,10 @@ function Chat() {
               </div>
 
               <div className="chat-messages">
-                {loadingThread && <p className="empty-state">Loading messages...</p>}
+                {loadingThread && <LoadingState label="Loading messages..." />}
 
                 {!loadingThread && messages.length === 0 && (
-                  <p className="empty-state">Say hi to start the conversation 👋</p>
+                  <p className="empty-state">Say hi to start the conversation.</p>
                 )}
 
                 {messages.map((m) => {
@@ -602,7 +628,7 @@ function Chat() {
                               Save
                             </button>
                             <button type="button" className="btn btn-ghost btn-sm" onClick={cancelEdit}>
-                              ✕
+                              <FiX aria-hidden="true" />
                             </button>
                           </div>
                         ) : (
@@ -628,15 +654,15 @@ function Chat() {
                                 onClick={() => setOpenMenuId(openMenuId === m._id ? null : m._id)}
                                 aria-label="Message options"
                               >
-                                ⋯
+                                <FiMoreHorizontal aria-hidden="true" />
                               </button>
                               {openMenuId === m._id && (
                                 <div className="chat-bubble-menu-dropdown">
                                   <button type="button" onClick={() => startEdit(m)}>
-                                    ✏️ Edit
+                                    <FiEdit2 aria-hidden="true" /> Edit
                                   </button>
                                   <button type="button" onClick={() => handleDeleteMessage(m)}>
-                                    🗑 Delete
+                                    <FiTrash2 aria-hidden="true" /> Delete
                                   </button>
                                 </div>
                               )}

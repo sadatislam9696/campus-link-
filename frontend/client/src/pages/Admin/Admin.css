@@ -1,6 +1,6 @@
 .admin-stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr));
   gap: 14px;
   margin-bottom: 20px;
 }
@@ -74,18 +74,18 @@
 }
 
 .admin-badge.active {
-  background: #dcfce7;
-  color: #16a34a;
+  background: var(--color-success-bg);
+  color: var(--color-success);
 }
 
 .admin-badge.banned {
-  background: #fee2e2;
+  background: var(--color-danger-bg);
   color: var(--color-danger);
 }
 
 .admin-badge.admin {
-  background: #ede9fe;
-  color: #7c3aed;
+  background: var(--color-primary-light);
+  color: var(--color-primary);
 }
 
 .admin-search {
@@ -100,4 +100,34 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+/* Wrap the tables so a wide row scrolls inside its card instead of forcing
+   the whole page to scroll sideways. */
+.admin-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.admin-table {
+  min-width: 620px;
+}
+
+@media (max-width: 767px) {
+  .admin-stat-value {
+    font-size: 1.5rem;
+  }
+
+  .admin-search {
+    max-width: none;
+  }
+
+  .admin-report-content {
+    max-width: 180px;
+  }
 }

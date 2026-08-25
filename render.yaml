@@ -13,5 +13,7 @@ services:
         sync: false
       - key: JWT_SECRET
         sync: false
+      # Comma-separated list of allowed frontend origins (CORS + Socket.io),
+      # e.g. https://campuslink.vercel.app,https://www.campuslink.app
       - key: CLIENT_URL
         sync: false

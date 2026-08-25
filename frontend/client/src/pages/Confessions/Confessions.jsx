@@ -10,6 +10,7 @@ import {
 import { timeAgo } from "../../utils/timeAgo";
 
 import MainLayout from "../../layouts/MainLayout";
+import { LoadingState } from "../../components/States/States";
 import "./Confessions.css";
 
 function CreateConfessionModal({ onClose, onCreated }) {
@@ -224,7 +225,7 @@ function Confessions() {
           </button>
         </div>
 
-        {loading && <p className="empty-state">Loading...</p>}
+        {loading && <LoadingState label="Loading..." />}
 
         {!loading && confessions.length === 0 && (
           <p className="empty-state">

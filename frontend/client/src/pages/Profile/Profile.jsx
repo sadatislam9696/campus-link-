@@ -7,6 +7,7 @@ import { getUserPosts, toggleLike, votePoll, deletePost, updatePost } from "../.
 import { getComments, addComment, updateComment, deleteComment } from "../../services/commentService";
 
 import MainLayout from "../../layouts/MainLayout";
+import { LoadingState } from "../../components/States/States";
 import PostCard from "../../components/PostCard/PostCard";
 import EditProfileModal from "../../components/EditProfileModal/EditProfileModal";
 import FriendActionButton from "../../components/FriendActionButton/FriendActionButton";
@@ -107,7 +108,7 @@ function Profile() {
     }
 
     if (activeTab === "Friends" && profile) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
+       
       loadFriends();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -224,7 +225,7 @@ function Profile() {
   if (loading) {
     return (
       <MainLayout>
-        <p className="empty-state">Loading profile...</p>
+        <LoadingState label="Loading profile..." />
       </MainLayout>
     );
   }
@@ -242,6 +243,7 @@ function Profile() {
   return (
     <MainLayout>
       <main className="profile-page">
+        <div className="profile-hero">
         <section className="profile-cover" aria-label="Cover photo">
           {profile.coverPhoto && (
             <img
@@ -272,6 +274,8 @@ function Profile() {
             </>
           )}
 
+        </section>
+
           <div className="profile-avatar" aria-hidden="true">
             {profile.avatar ? (
               <img
@@ -283,7 +287,7 @@ function Profile() {
               initials
             )}
           </div>
-        </section>
+        </div>
 
         <section className="profile-summary">
           <div className="profile-title">
@@ -328,12 +332,8 @@ function Profile() {
               <button
                 key={tab}
                 type="button"
-                className="profile-nav-item"
-                style={
-                  activeTab === tab
-                    ? { background: "#eeebfc", borderColor: "#ddd6fe", color: "#6c5ce7" }
-                    : undefined
-                }
+                className={`profile-nav-item${activeTab === tab ? " active" : ""}`}
+                aria-pressed={activeTab === tab}
                 onClick={() => setActiveTab(tab)}
               >
                 {tab}
@@ -369,7 +369,7 @@ function Profile() {
             {activeTab === "Friends" && (
               <article className="profile-card">
                 <h2>Friends</h2>
-                {friendsLoading && <p className="empty-state">Loading friends...</p>}
+                {friendsLoading && <LoadingState label="Loading friends..." />}
                 {!friendsLoading && friendsList.length === 0 && (
                   <p className="empty-state">No friends yet.</p>
                 )}
@@ -401,7 +401,7 @@ function Profile() {
 
             {activeTab === "Posts" && (
               <div>
-                {postsLoading && <p className="empty-state">Loading posts...</p>}
+                {postsLoading && <LoadingState label="Loading posts..." />}
                 {!postsLoading && posts.length === 0 && (
                   <p className="empty-state">No posts yet.</p>
                 )}

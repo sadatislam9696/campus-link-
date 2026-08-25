@@ -1,6 +1,6 @@
 .group-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
   gap: 14px;
 }
 
@@ -54,4 +54,22 @@
 
 .groups-toolbar .input {
   flex: 1;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 640px) {
+  .group-grid {
+    gap: 12px;
+  }
+
+  .group-card {
+    padding: 16px;
+  }
+
+  .group-card-desc {
+    min-height: 0;
+  }
 }

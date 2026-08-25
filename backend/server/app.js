@@ -8,6 +8,7 @@ const path = require("path");
 
 const { generalLimiter } = require("./src/middleware/rateLimiter");
 const sanitizeBody = require("./src/middleware/sanitizeBody");
+const { corsOriginCheck } = require("./src/config/allowedOrigins");
 
 const app = express();
 
@@ -29,7 +30,7 @@ app.use(compression());
 
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin: corsOriginCheck,
     credentials: true,
   })
 );

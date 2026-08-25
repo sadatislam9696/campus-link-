@@ -73,7 +73,9 @@
 }
 
 .post-card-category-badge {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
   font-size: 0.68rem;
   font-weight: 700;
   color: var(--color-primary);
@@ -149,11 +151,29 @@
 }
 
 .post-action-btn:hover {
-  background: var(--color-bg);
+  background: var(--color-bg-subtle);
+  color: var(--color-text);
 }
 
+/* The like state used to be conveyed by swapping a white heart emoji for a
+   red one. It's now a filled icon plus a colour change on the same glyph. */
 .post-action-btn.liked {
-  color: var(--color-primary);
+  color: var(--color-danger);
+}
+
+.post-action-btn.liked svg {
+  fill: currentColor;
+}
+
+.post-card-likes {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.post-card-likes svg {
+  color: var(--color-danger);
+  fill: currentColor;
 }
 
 .post-card-comments {
@@ -272,4 +292,30 @@
   font-size: 0.75rem;
   color: var(--color-text-soft);
   margin-top: 4px;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 640px) {
+  .post-card-actions {
+    gap: 2px;
+  }
+
+  .post-action-btn {
+    font-size: 0.82rem;
+    padding: 9px 4px;
+  }
+
+  /* Author name and meta must be able to shrink rather than push the
+     overflow menu off the card. */
+  .post-card-header-text {
+    min-width: 0;
+  }
+
+  .post-card-meta {
+    flex-wrap: wrap;
+    row-gap: 2px;
+  }
 }

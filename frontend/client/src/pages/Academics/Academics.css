@@ -65,3 +65,29 @@
   color: var(--color-danger);
   font-weight: 700;
 }
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 640px) {
+  .academics-toolbar {
+    gap: 8px;
+  }
+
+  .academics-toolbar .input {
+    min-width: 0;
+    flex-basis: 100%;
+  }
+
+  /* Stack the title block above its action buttons rather than squeezing
+     both onto one line. */
+  .item-row-top {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .item-actions {
+    justify-content: flex-end;
+  }
+}

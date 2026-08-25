@@ -14,6 +14,7 @@ import { timeAgo } from "../../utils/timeAgo";
 import { API_URL } from "../../config";
 
 import MainLayout from "../../layouts/MainLayout";
+import { LoadingState } from "../../components/States/States";
 import "./GroupDetail.css";
 
 function MemberAvatar({ user, size = 36 }) {
@@ -124,7 +125,7 @@ function GroupDetail() {
   if (loading) {
     return (
       <MainLayout>
-        <p className="empty-state">Loading group...</p>
+        <LoadingState label="Loading group..." />
       </MainLayout>
     );
   }

@@ -1,35 +1,197 @@
-.main-layout-body {
+/* ==========================================================================
+   App shell layout
+   --------------------------------------------------------------------------
+   Grid columns:
+     >= 1280px   rail | content | right rail
+     >= 1024px   rail | content            (right rail dropped)
+     <  1024px   content                   (rail becomes a drawer)
+   ========================================================================== */
+
+.app-shell {
+  min-height: 100vh;
   display: flex;
-  gap: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px 16px 60px;
-  align-items: flex-start;
+  flex-direction: column;
 }
 
-.main-layout-content {
+.shell-body {
   flex: 1;
+  width: 100%;
+  max-width: var(--shell-max);
+  margin: 0 auto;
+  padding: var(--gutter);
+  display: grid;
+  grid-template-columns: var(--sidebar-width) minmax(0, 1fr) var(--rail-width);
+  gap: 28px;
+  align-items: start;
+}
+
+.shell-body.no-sidebar {
+  grid-template-columns: minmax(0, 1fr) var(--rail-width);
+}
+
+.shell-body.no-rail {
+  grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+}
+
+.shell-body.no-sidebar.no-rail {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+/* minmax(0, 1fr) above plus min-width:0 here is what stops a wide child
+   (a chat transcript, a table, a long URL) from blowing out the grid. */
+.shell-content {
   min-width: 0;
 }
 
-.main-layout-right {
-  width: 260px;
-  flex-shrink: 0;
+/* --- Rails -------------------------------------------------------------- */
+
+.shell-rail-left,
+.shell-rail-right {
+  min-width: 0;
 }
 
-.trending-card p {
-  padding: 8px 4px;
-  color: var(--color-text-muted);
-  font-size: 0.9rem;
+.shell-rail-left-inner,
+.shell-rail-right-inner {
+  position: sticky;
+  /* Sits just below the sticky navbar. */
+  top: calc(var(--nav-height) + var(--gutter));
+  max-height: calc(100vh - var(--nav-height) - var(--gutter) * 2);
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
-.trending-card h3 {
-  font-size: 0.95rem;
-  margin-bottom: 8px;
+.shell-rail-left-inner {
+  display: flex;
+  flex-direction: column;
 }
 
-@media (max-width: 960px) {
-  .main-layout-right {
+.shell-rail-right-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* --- Trending card ------------------------------------------------------ */
+
+.trending-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.trending-tag {
+  padding: 0.28rem 0.7rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   Mobile drawer
+   ========================================================================== */
+
+.shell-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--dur) var(--ease), visibility var(--dur) var(--ease);
+}
+
+.shell-scrim.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.shell-drawer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 95;
+  width: min(84vw, 300px);
+  padding: 16px 12px;
+  background: var(--color-card);
+  border-right: 1px solid var(--color-border);
+  box-shadow: var(--shadow-overlay);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  transform: translateX(-100%);
+  transition: transform var(--dur) var(--ease);
+  /* Keeps the closed drawer out of the tab order and off screen readers. */
+  visibility: hidden;
+}
+
+.shell-drawer.open {
+  transform: none;
+  visibility: visible;
+}
+
+/* The drawer only exists below the sidebar breakpoint. */
+@media (min-width: 1024px) {
+  .shell-scrim,
+  .shell-drawer {
     display: none;
+  }
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+/* Widescreen: let the content column breathe a little more. */
+@media (min-width: 1600px) {
+  .shell-body {
+    gap: 32px;
+  }
+}
+
+/* Laptop: drop the right rail, keep the navigation rail. */
+@media (max-width: 1279px) {
+  .shell-body,
+  .shell-body.no-rail {
+    grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+  }
+
+  .shell-body.no-sidebar,
+  .shell-body.no-sidebar.no-rail {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .shell-rail-right {
+    display: none;
+  }
+}
+
+/* Tablet and below: single column, navigation moves to the drawer. */
+@media (max-width: 1023px) {
+  .shell-body,
+  .shell-body.no-rail,
+  .shell-body.no-sidebar,
+  .shell-body.no-sidebar.no-rail {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+    padding: 20px 16px;
+  }
+
+  .shell-rail-left {
+    display: none;
+  }
+}
+
+/* Phone: tighter gutters, and room at the bottom for the tab bar. */
+@media (max-width: 767px) {
+  .shell-body,
+  .shell-body.no-rail,
+  .shell-body.no-sidebar,
+  .shell-body.no-sidebar.no-rail {
+    padding: 16px 12px;
+    padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px));
   }
 }

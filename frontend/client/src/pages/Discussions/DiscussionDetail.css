@@ -67,3 +67,26 @@
 .reply-form input {
   flex: 1;
 }
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 640px) {
+  .discussion-detail-header {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .discussion-detail-meta {
+    flex-wrap: wrap;
+    row-gap: 4px;
+  }
+
+  /* Textarea above the submit button rather than side by side. */
+  .reply-form {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+}

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { getGroups, createGroup, joinGroup } from "../../services/groupService";
 import MainLayout from "../../layouts/MainLayout";
+import { LoadingState } from "../../components/States/States";
 import "./Groups.css";
 
 function CreateGroupModal({ defaultType, onClose, onCreated }) {
@@ -155,7 +156,7 @@ function Groups() {
           </button>
         </div>
 
-        {loading && <p className="empty-state">Loading groups...</p>}
+        {loading && <LoadingState label="Loading groups..." />}
 
         {!loading && groups.length === 0 && (
           <p className="empty-state">No study groups yet — create the first one!</p>

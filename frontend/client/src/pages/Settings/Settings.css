@@ -106,3 +106,27 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 560px) {
+  /* Stack the label above its control so long descriptions don't squeeze
+     the toggle into a sliver. */
+  .settings-row {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 14px 12px;
+  }
+
+  .settings-row > div:first-child {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
+  .settings-link-row {
+    padding: 14px 12px;
+  }
+}

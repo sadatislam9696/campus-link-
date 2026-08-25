@@ -1,6 +1,20 @@
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 
+import {
+  FiHeart,
+  FiMessageCircle,
+  FiEdit2,
+  FiTrash2,
+  FiFlag,
+  FiPaperclip,
+  FiCalendar,
+  FiHelpCircle,
+  FiVolume2,
+  FiCheck,
+  FiX,
+} from "react-icons/fi";
+
 import { AuthContext } from "../../context/AuthContext";
 import { timeAgo } from "../../utils/timeAgo";
 import ReportModal from "../ReportModal/ReportModal";
@@ -147,34 +161,54 @@ function PostCard({
     setReplyTo(null);
   };
 
+  const hasPoll = Boolean(post.poll?.question) && (post.poll?.options?.length || 0) > 0;
   const totalVotes = post.poll?.options?.reduce((sum, o) => sum + (o.votes?.length || 0), 0) || 0;
   const myVoteIndex = post.poll?.options?.findIndex((o) =>
     o.votes?.includes(user?.id)
   );
 
+  // A post whose author record is gone (deleted account, or an orphaned
+  // row) still has to render something sensible rather than an empty name
+  // and a bare "@".
+  const author = post.author;
+  const authorName = author
+    ? `${author.firstName || ""} ${author.lastName || ""}`.trim() || author.username
+    : "Deleted user";
+  const authorHref = author?.username ? `/profile/${author.username}` : null;
+  const postedAt = timeAgo(post.createdAt);
+
   return (
     <div className="card post-card">
       <div className="post-card-header">
-        <Link to={`/profile/${post.author?.username}`}>
-          <Avatar user={post.author} />
-        </Link>
+        {authorHref ? (
+          <Link to={authorHref}>
+            <Avatar user={author} />
+          </Link>
+        ) : (
+          <Avatar user={author} />
+        )}
 
         <div className="post-card-header-text">
-          <Link
-            to={`/profile/${post.author?.username}`}
-            className="post-card-name"
-          >
-            {post.author?.firstName} {post.author?.lastName}
-          </Link>
+          {authorHref ? (
+            <Link to={authorHref} className="post-card-name">
+              {authorName}
+            </Link>
+          ) : (
+            <span className="post-card-name">{authorName}</span>
+          )}
 
           <div className="post-card-meta">
-            <span>@{post.author?.username}</span>
-            <span>·</span>
-            <span>{timeAgo(post.createdAt)}</span>
+            {author?.username && <span>@{author.username}</span>}
+            {author?.username && postedAt && <span>·</span>}
+            {postedAt && <span>{postedAt}</span>}
             {post.isEdited && <span>· edited</span>}
             {post.category && post.category !== "general" && (
               <span className="post-card-category-badge" style={{ marginLeft: 4 }}>
-                {{ event: "📅 Event", question: "❓ Question", announcement: "📢 Announcement" }[post.category]}
+                {{
+                  event: <><FiCalendar aria-hidden="true" /> Event</>,
+                  question: <><FiHelpCircle aria-hidden="true" /> Question</>,
+                  announcement: <><FiVolume2 aria-hidden="true" /> Announcement</>,
+                }[post.category]}
               </span>
             )}
           </div>
@@ -200,7 +234,7 @@ function PostCard({
                     setMenuOpen(false);
                   }}
                 >
-                  ✏️ Edit
+                  <FiEdit2 aria-hidden="true" /> Edit
                 </button>
                 <button
                   type="button"
@@ -209,7 +243,7 @@ function PostCard({
                     if (confirm("Delete this post?")) onDelete?.();
                   }}
                 >
-                  🗑 Delete
+                  <FiTrash2 aria-hidden="true" /> Delete
                 </button>
               </div>
             )}
@@ -236,7 +270,7 @@ function PostCard({
                     setReporting(true);
                   }}
                 >
-                  🚩 Report
+                  <FiFlag aria-hidden="true" /> Report
                 </button>
               </div>
             )}
@@ -299,11 +333,11 @@ function PostCard({
           rel="noreferrer"
           className="post-card-doc-chip"
         >
-          📎 {post.document.name || "Download attachment"}
+          <FiPaperclip aria-hidden="true" /> {post.document.name || "Download attachment"}
         </a>
       )}
 
-      {post.poll && (
+      {hasPoll && (
         <div className="post-poll">
           <div className="post-poll-question">{post.poll.question}</div>
           {post.poll.options.map((opt, i) => {
@@ -319,7 +353,7 @@ function PostCard({
               >
                 <div className="post-poll-option-fill" style={{ width: `${pct}%` }} />
                 <span className="post-poll-option-label">
-                  {isMine && "✓ "}
+                  {isMine && <FiCheck aria-hidden="true" />}
                   {opt.text}
                 </span>
                 <span className="post-poll-option-pct">{pct}%</span>
@@ -331,7 +365,7 @@ function PostCard({
       )}
 
       <div className="post-card-stats">
-        <span>❤️ {post.likes?.length || 0} likes</span>
+        <span className="post-card-likes"><FiHeart aria-hidden="true" /> {post.likes?.length || 0} likes</span>
         <span>{post.commentsCount || 0} comments</span>
       </div>
 
@@ -341,7 +375,7 @@ function PostCard({
           className={`post-action-btn ${liked ? "liked" : ""}`}
           onClick={onLike}
         >
-          {liked ? "❤️" : "🤍"} Like
+          <FiHeart aria-hidden="true" /> Like
         </button>
 
         <button
@@ -353,7 +387,7 @@ function PostCard({
               ?.focus()
           }
         >
-          💬 Comment
+          <FiMessageCircle aria-hidden="true" /> Comment
         </button>
       </div>
 
@@ -393,8 +427,13 @@ function PostCard({
                 <button type="button" className="btn btn-primary btn-sm" onClick={submitReply}>
                   Reply
                 </button>
-                <button type="button" className="btn btn-ghost btn-sm" onClick={() => setReplyTo(null)}>
-                  ✕
+                <button
+                  type="button"
+                  className="btn btn-ghost btn-sm"
+                  onClick={() => setReplyTo(null)}
+                  aria-label="Cancel reply"
+                >
+                  <FiX aria-hidden="true" />
                 </button>
               </div>
             )}

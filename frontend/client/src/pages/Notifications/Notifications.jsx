@@ -8,10 +8,12 @@ import {
 } from "../../services/notificationService";
 
 import MainLayout from "../../layouts/MainLayout";
+import { LoadingState, EmptyState } from "../../components/States/States";
 import { timeAgo } from "../../utils/timeAgo";
 import "./Notifications.css";
 
 import { API_URL } from "../../config";
+import { FiBell } from "react-icons/fi";
 
 const API_BASE = API_URL;
 
@@ -87,10 +89,14 @@ function Notifications() {
         </div>
 
         <div className="card" style={{ padding: 0 }}>
-          {loading && <p className="empty-state">Loading notifications...</p>}
+          {loading && <LoadingState label="Loading notifications..." />}
 
           {!loading && notifications.length === 0 && (
-            <p className="empty-state">You're all caught up — no notifications yet.</p>
+            <EmptyState
+              icon={FiBell}
+              title="You're all caught up"
+              text="Likes, comments, friend requests and messages will land here."
+            />
           )}
 
           {notifications.map((n) => (

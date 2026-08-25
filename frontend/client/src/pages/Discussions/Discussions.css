@@ -47,3 +47,23 @@
   color: var(--color-text-soft);
   margin-top: 4px;
 }
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 640px) {
+  .discussions-toolbar {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .discussion-row {
+    padding: 14px;
+  }
+
+  .discussion-meta {
+    flex-wrap: wrap;
+    row-gap: 4px;
+  }
+}

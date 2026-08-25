@@ -12,6 +12,7 @@ import {
 } from "../../services/friendService";
 
 import MainLayout from "../../layouts/MainLayout";
+import { LoadingState } from "../../components/States/States";
 import "./Friends.css";
 
 import { API_URL } from "../../config";
@@ -142,7 +143,7 @@ function Friends() {
           ))}
         </div>
 
-        {loading && <p className="empty-state">Loading...</p>}
+        {loading && <LoadingState label="Loading..." />}
 
         {!loading && tab === "incoming" && (
           <div className="card" style={{ padding: 0 }}>

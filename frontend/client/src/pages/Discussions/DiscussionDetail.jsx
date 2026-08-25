@@ -7,6 +7,7 @@ import { timeAgo } from "../../utils/timeAgo";
 import { API_URL } from "../../config";
 
 import MainLayout from "../../layouts/MainLayout";
+import { LoadingState } from "../../components/States/States";
 import "./DiscussionDetail.css";
 
 function PersonAvatar({ user, size = 34 }) {
@@ -85,7 +86,7 @@ function DiscussionDetail() {
   if (loading) {
     return (
       <MainLayout>
-        <p className="empty-state">Loading discussion...</p>
+        <LoadingState label="Loading discussion..." />
       </MainLayout>
     );
   }

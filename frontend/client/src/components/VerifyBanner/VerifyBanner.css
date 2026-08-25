@@ -1,7 +1,7 @@
 .verify-banner {
-  background: #fffbeb;
-  border-bottom: 1px solid #fde68a;
-  color: #92400e;
+  background: var(--color-warning-bg);
+  border-bottom: 1px solid var(--color-warning-border);
+  color: var(--color-warning);
   padding: 10px 20px;
   font-size: 0.85rem;
   display: flex;
@@ -13,8 +13,8 @@
 
 .verify-banner button {
   background: none;
-  border: 1px solid #92400e;
-  color: #92400e;
+  border: 1px solid var(--color-warning);
+  color: var(--color-warning);
   border-radius: var(--radius-pill);
   padding: 3px 12px;
   font-size: 0.78rem;
@@ -25,4 +25,17 @@
 .verify-banner button:disabled {
   opacity: 0.6;
   cursor: default;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 560px) {
+  .verify-banner {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+    padding: 10px 14px;
+  }
 }

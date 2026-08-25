@@ -44,3 +44,22 @@
   font-size: 0.78rem;
   color: var(--color-text-soft);
 }
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 640px) {
+  .team-card {
+    padding: 16px;
+  }
+
+  .team-desc {
+    min-height: 0;
+  }
+
+  .team-footer {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}

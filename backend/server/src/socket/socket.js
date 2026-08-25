@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 
 const Message = require("../models/Message");
 const { createNotification } = require("../utils/notificationHelper");
+const { isAllowedOrigin } = require("../config/allowedOrigins");
 
 let io;
 
@@ -13,7 +14,9 @@ const onlineUsers = new Map();
 const initSocket = (httpServer) => {
   io = new Server(httpServer, {
     cors: {
-      origin: process.env.CLIENT_URL || "http://localhost:5173",
+      // Same allow-list as the REST API - see config/allowedOrigins.js.
+      origin: (origin, callback) =>
+        callback(null, !origin || isAllowedOrigin(origin)),
       credentials: true,
     },
   });

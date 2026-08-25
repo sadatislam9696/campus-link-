@@ -4,8 +4,10 @@ import { AuthContext } from "../../context/AuthContext";
 import { getTeams, createTeam, joinTeam, leaveTeam, deleteTeam } from "../../services/teamService";
 
 import MainLayout from "../../layouts/MainLayout";
+import { LoadingState, EmptyState } from "../../components/States/States";
 import "./Teams.css";
 import "../Groups/Groups.css";
+import { FiAward } from "react-icons/fi";
 
 const TYPES = ["study", "project", "competition", "other"];
 const CATEGORIES = ["academic", "social", "professional", "sport", "art"];
@@ -177,10 +179,14 @@ function Teams() {
           </button>
         </div>
 
-        {loading && <p className="empty-state">Loading teams...</p>}
+        {loading && <LoadingState label="Loading teams..." />}
 
         {!loading && teams.length === 0 && (
-          <p className="empty-state">No teams yet — create one to start collaborating.</p>
+          <EmptyState
+            icon={FiAward}
+            title="No teams yet"
+            text="Create a team to organise a project or competition entry."
+          />
         )}
 
         <div className="group-grid">

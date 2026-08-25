@@ -11,7 +11,9 @@ import { timeAgo } from "../../utils/timeAgo";
 import { API_URL } from "../../config";
 
 import MainLayout from "../../layouts/MainLayout";
+import { LoadingState, EmptyState } from "../../components/States/States";
 import "./LostFound.css";
+import { FiPackage } from "react-icons/fi";
 
 function CreateItemModal({ defaultCategory, onClose, onCreated }) {
   const [form, setForm] = useState({
@@ -182,10 +184,14 @@ function LostFound() {
           </button>
         </div>
 
-        {loading && <p className="empty-state">Loading...</p>}
+        {loading && <LoadingState label="Loading..." />}
 
         {!loading && items.length === 0 && (
-          <p className="empty-state">Nothing here right now.</p>
+          <EmptyState
+            icon={FiPackage}
+            title="Nothing reported right now"
+            text="Lost or found something on campus? Post it here so it finds its way back."
+          />
         )}
 
         <div className="lf-grid">

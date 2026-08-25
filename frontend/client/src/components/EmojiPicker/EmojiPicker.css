@@ -48,3 +48,16 @@
 .emoji-popover button:hover {
   background: var(--color-bg);
 }
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 480px) {
+  /* Keep the popover inside the viewport on a narrow screen. */
+  .emoji-popover {
+    right: auto;
+    left: 0;
+    max-width: calc(100vw - 32px);
+  }
+}

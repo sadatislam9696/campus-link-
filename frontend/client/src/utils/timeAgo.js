@@ -1,7 +1,14 @@
 // Formats an ISO date string into a short relative time label,
 // e.g. "just now", "5m", "3h", "2d", or a plain date once it's old.
 export function timeAgo(dateString) {
+  if (!dateString) return "";
+
   const date = new Date(dateString);
+
+  // A malformed or missing timestamp used to render the literal string
+  // "Invalid Date" in the feed. Fall back to an empty label instead.
+  if (Number.isNaN(date.getTime())) return "";
+
   const seconds = Math.floor((Date.now() - date.getTime()) / 1000);
 
   if (seconds < 5) return "just now";

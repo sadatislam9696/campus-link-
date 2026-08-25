@@ -9,8 +9,8 @@
   gap: 5px;
   font-size: 0.68rem;
   font-weight: 700;
-  color: #7c3aed;
-  background: #ede9fe;
+  color: var(--color-primary);
+  background: var(--color-primary-light);
   padding: 3px 10px;
   border-radius: var(--radius-pill);
   margin-bottom: 10px;
@@ -44,11 +44,21 @@
 }
 
 .confession-like-btn.liked {
-  color: #dc2626;
+  color: var(--color-danger);
 }
 
 .confession-time {
   font-size: 0.75rem;
   color: var(--color-text-soft);
   margin-left: auto;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 640px) {
+  .confession-card {
+    padding: 16px;
+  }
 }

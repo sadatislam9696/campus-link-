@@ -4,7 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { getDiscussions, createDiscussion } from "../../services/discussionService";
 import { timeAgo } from "../../utils/timeAgo";
 import MainLayout from "../../layouts/MainLayout";
+import { LoadingState, EmptyState } from "../../components/States/States";
 import "./Discussions.css";
+import { FiMessageSquare } from "react-icons/fi";
 
 function CreateDiscussionModal({ onClose, onCreated }) {
   const [title, setTitle] = useState("");
@@ -143,10 +145,14 @@ function Discussions() {
         </form>
 
         <div className="card" style={{ padding: 0 }}>
-          {loading && <p className="empty-state">Loading discussions...</p>}
+          {loading && <LoadingState label="Loading discussions..." />}
 
           {!loading && discussions.length === 0 && (
-            <p className="empty-state">No discussions yet — start one!</p>
+            <EmptyState
+              icon={FiMessageSquare}
+              title="No discussions yet"
+              text="Start a thread tagged with a course code and get the conversation going."
+            />
           )}
 
           {discussions.map((d) => (

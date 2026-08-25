@@ -7,6 +7,7 @@ import { getMyProfile, updateSettings } from "../../services/profileService";
 import ChangePasswordModal from "../../components/ChangePasswordModal/ChangePasswordModal";
 
 import MainLayout from "../../layouts/MainLayout";
+import { LoadingState } from "../../components/States/States";
 import "./Settings.css";
 
 function Toggle({ checked, onChange, disabled }) {
@@ -42,7 +43,7 @@ function Settings() {
         setLoading(false);
       }
     };
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+     
     load();
   }, []);
 
@@ -67,15 +68,9 @@ function Settings() {
     }
   };
 
-  const handleDarkModeToggle = async () => {
-    const next = !darkMode;
-    setDarkMode(next); // applies instantly, no need to wait on the network
-    try {
-      await updateSettings({ darkMode: next });
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // ThemeProvider.setDarkMode applies the theme instantly and persists it,
+  // so this is just the toggle handler.
+  const handleDarkModeToggle = () => setDarkMode(!darkMode);
 
   const handleLogout = () => {
     logout();
@@ -85,7 +80,7 @@ function Settings() {
   if (loading) {
     return (
       <MainLayout>
-        <p className="empty-state">Loading settings...</p>
+        <LoadingState label="Loading settings..." />
       </MainLayout>
     );
   }
