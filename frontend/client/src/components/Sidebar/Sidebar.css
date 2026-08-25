@@ -1,0 +1,107 @@
+/* ==========================================================================
+   Sidebar - primary navigation
+   --------------------------------------------------------------------------
+   The same markup serves two presentations: a sticky rail on desktop, and
+   the contents of the slide-in drawer on mobile (see MainLayout.css).
+   ========================================================================== */
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  padding: 6px 0 12px;
+}
+
+.sidebar-section {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sidebar-heading {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-soft);
+  padding: 0 12px 6px;
+}
+
+.sidebar-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  text-decoration: none;
+  color: var(--color-text-muted);
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 9px 12px;
+  border-radius: var(--radius-md);
+  transition: background-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease);
+}
+
+.sidebar-link:hover {
+  background: var(--color-bg-subtle);
+  color: var(--color-text);
+}
+
+.sidebar-link-icon {
+  font-size: 1.12rem;
+  flex-shrink: 0;
+  stroke-width: 2;
+}
+
+.sidebar-link-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Active destination: tinted row plus a left marker, so the current page is
+   obvious at a glance instead of relying on colour alone. */
+.sidebar-link.active {
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+.sidebar-link.active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 20px;
+  border-radius: 0 var(--radius-pill) var(--radius-pill) 0;
+  background: var(--color-primary);
+}
+
+.sidebar-link.active .sidebar-link-icon {
+  stroke-width: 2.4;
+}
+
+.sidebar-link.disabled {
+  color: var(--color-text-soft);
+  cursor: default;
+  pointer-events: none;
+}
+
+.sidebar-soon {
+  margin-left: auto;
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--color-text-soft);
+  background: var(--color-bg-subtle);
+  padding: 2px 7px;
+  border-radius: var(--radius-pill);
+}
+
+.sidebar-footnote {
+  margin-top: auto;
+  padding: 12px;
+  font-size: 0.72rem;
+  color: var(--color-text-soft);
+}

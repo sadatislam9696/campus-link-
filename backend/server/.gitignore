@@ -1,0 +1,14 @@
+node_modules/
+.env
+*.log
+coverage/
+
+# Uploaded runtime files (keep folder structure, ignore contents)
+src/uploads/avatars/*
+src/uploads/posts/*
+src/uploads/notes/*
+src/uploads/covers/*
+!src/uploads/avatars/.gitkeep
+!src/uploads/posts/.gitkeep
+!src/uploads/notes/.gitkeep
+!src/uploads/covers/.gitkeep

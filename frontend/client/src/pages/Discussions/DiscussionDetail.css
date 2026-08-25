@@ -1,0 +1,92 @@
+.discussion-detail-header {
+  margin-bottom: 16px;
+}
+
+.discussion-detail-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin: 6px 0;
+}
+
+.discussion-detail-meta {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.discussion-detail-content {
+  margin-top: 14px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  line-height: 1.6;
+}
+
+.reply-row {
+  display: flex;
+  gap: 10px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.reply-row:last-child {
+  border-bottom: none;
+}
+
+.reply-row .avatar {
+  width: 34px;
+  height: 34px;
+  font-size: 0.7rem;
+  flex-shrink: 0;
+}
+
+.reply-name {
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.reply-time {
+  font-weight: 400;
+  font-size: 0.72rem;
+  color: var(--color-text-soft);
+  margin-left: 6px;
+}
+
+.reply-content {
+  font-size: 0.88rem;
+  margin-top: 2px;
+}
+
+.reply-form {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.reply-form input {
+  flex: 1;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 640px) {
+  .discussion-detail-header {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .discussion-detail-meta {
+    flex-wrap: wrap;
+    row-gap: 4px;
+  }
+
+  /* Textarea above the submit button rather than side by side. */
+  .reply-form {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+}

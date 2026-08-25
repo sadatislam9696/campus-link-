@@ -1,0 +1,103 @@
+.friends-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.friends-tab {
+  border: none;
+  background: var(--color-card);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-pill);
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  box-shadow: var(--shadow-card);
+}
+
+.friends-tab.active {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.friend-request-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.friend-request-row:last-child {
+  border-bottom: none;
+}
+
+.friend-request-row .avatar {
+  width: 46px;
+  height: 46px;
+  flex-shrink: 0;
+}
+
+.friend-request-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.friend-request-name {
+  font-weight: 700;
+  font-size: 0.92rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.friend-request-meta {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.friend-request-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 560px) {
+  /* Name block on its own line, actions beneath at full width, so the
+     accept/reject buttons stay comfortably tappable. */
+  .friend-request-row {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .friend-request-info {
+    min-width: 0;
+  }
+
+  .friend-request-actions {
+    width: 100%;
+    display: flex;
+    gap: 8px;
+  }
+
+  .friend-request-actions .btn {
+    flex: 1;
+  }
+
+  .friends-tabs {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .friends-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .friends-tab {
+    flex-shrink: 0;
+  }
+}

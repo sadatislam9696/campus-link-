@@ -1,0 +1,340 @@
+/* ==========================================================================
+   Profile page
+   --------------------------------------------------------------------------
+   Note: this file previously redefined the global .btn / .btn-primary /
+   .btn-secondary classes and hardcoded light-mode hex colours. Because every
+   stylesheet lands in one bundle, those rules leaked out and restyled buttons
+   on every other page, and the fixed colours ignored dark mode. Everything
+   here is now scoped to .profile-* and driven by design tokens.
+   ========================================================================== */
+
+.profile-page {
+  width: 100%;
+  color: var(--color-text);
+}
+
+/* --- Cover ------------------------------------------------------------- */
+
+/* The cover clips its own image, but the avatar deliberately overhangs the
+   bottom edge - so the avatar is a sibling positioned against this wrapper
+   rather than a child of the clipped cover. */
+.profile-hero {
+  position: relative;
+}
+
+.profile-cover {
+  position: relative;
+  min-height: 240px;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+}
+
+.profile-cover-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-cover-edit-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 2;
+}
+
+.profile-cover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.24), transparent 30%),
+    radial-gradient(circle at 80% 30%, rgba(255, 255, 255, 0.16), transparent 25%),
+    radial-gradient(circle at 50% 80%, rgba(255, 255, 255, 0.08), transparent 20%);
+}
+
+.profile-cover__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.08), rgba(15, 23, 42, 0.4));
+}
+
+.profile-avatar {
+  position: absolute;
+  left: 32px;
+  bottom: -44px;
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  border: 5px solid var(--color-card);
+  background: var(--color-card);
+  color: var(--color-primary);
+  display: grid;
+  place-items: center;
+  font-size: 2rem;
+  font-weight: 700;
+  overflow: hidden;
+  box-shadow: var(--shadow-lift);
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* --- Summary ------------------------------------------------------------ */
+
+.profile-summary {
+  margin-top: 60px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.profile-title {
+  min-width: 220px;
+  flex: 1;
+}
+
+.profile-title h1 {
+  font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.2rem);
+  margin-bottom: 0.35rem;
+  letter-spacing: -0.03em;
+}
+
+.profile-subtitle {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.96rem;
+  line-height: 1.6;
+}
+
+.profile-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+/* Page-local button variant kept for the profile action row only. */
+.btn-tertiary {
+  background: var(--color-bg-subtle);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+.btn-tertiary:not(:disabled):hover {
+  background: var(--color-card-hover);
+  border-color: var(--color-border-strong);
+}
+
+/* --- Tabs --------------------------------------------------------------- */
+
+.profile-navigation {
+  /* Own row: .profile-summary is a wrapping flex row, and without this the
+     tabs sit beside the action buttons instead of below the identity block. */
+  flex-basis: 100%;
+  margin-top: 20px;
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 2px;
+}
+
+.profile-navigation::-webkit-scrollbar {
+  display: none;
+}
+
+.profile-nav-item {
+  appearance: none;
+  flex-shrink: 0;
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  padding: 0.55rem 1.1rem;
+  color: var(--color-text-muted);
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+
+.profile-nav-item:hover {
+  background: var(--color-bg-subtle);
+  color: var(--color-text);
+  border-color: var(--color-border-strong);
+}
+
+.profile-nav-item.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+
+/* --- Body --------------------------------------------------------------- */
+
+.profile-body {
+  margin-top: 26px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.profile-column,
+.profile-sidebar {
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+}
+
+.profile-card {
+  background: var(--color-card);
+  border-radius: var(--radius-lg);
+  padding: 22px;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
+}
+
+.profile-card h2 {
+  margin: 0 0 14px;
+  font-size: 1.08rem;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+}
+
+.profile-card p,
+.profile-card li {
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  font-size: 0.93rem;
+}
+
+.profile-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.profile-list li {
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--color-border);
+}
+
+.profile-metrics {
+  display: grid;
+  gap: 12px;
+}
+
+.profile-metric {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 15px;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--color-border);
+}
+
+.profile-metric strong {
+  display: block;
+  color: var(--color-text);
+  margin-bottom: 2px;
+  font-size: 0.9rem;
+}
+
+.profile-metric span {
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.profile-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.profile-link:hover {
+  text-decoration: underline;
+}
+
+/* --- Skill chips -------------------------------------------------------- */
+
+.profile-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.profile-skill {
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 900px) {
+  .profile-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .profile-cover {
+    min-height: 170px;
+    border-radius: var(--radius-lg);
+  }
+
+  /* Centre the avatar on a phone - a left-anchored one crowds the name. */
+  .profile-avatar {
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -38px;
+    width: 88px;
+    height: 88px;
+    font-size: 1.7rem;
+  }
+
+  .profile-summary {
+    margin-top: 52px;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .profile-title {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .profile-actions {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .profile-card {
+    padding: 18px;
+  }
+}

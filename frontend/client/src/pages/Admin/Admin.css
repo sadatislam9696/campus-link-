@@ -1,0 +1,133 @@
+.admin-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr));
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.admin-stat-card {
+  padding: 18px;
+}
+
+.admin-stat-value {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.admin-stat-label {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+.admin-stat-sub {
+  font-size: 0.72rem;
+  color: var(--color-primary);
+  margin-top: 6px;
+  font-weight: 600;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-table th {
+  text-align: left;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-soft);
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.admin-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 0.88rem;
+  vertical-align: middle;
+}
+
+.admin-table tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-row-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.admin-row-user .avatar {
+  width: 34px;
+  height: 34px;
+  font-size: 0.7rem;
+}
+
+.admin-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+}
+
+.admin-badge.active {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+}
+
+.admin-badge.banned {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+}
+
+.admin-badge.admin {
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+.admin-search {
+  max-width: 320px;
+  margin-bottom: 14px;
+}
+
+.admin-report-content {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  max-width: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+/* Wrap the tables so a wide row scrolls inside its card instead of forcing
+   the whole page to scroll sideways. */
+.admin-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.admin-table {
+  min-width: 620px;
+}
+
+@media (max-width: 767px) {
+  .admin-stat-value {
+    font-size: 1.5rem;
+  }
+
+  .admin-search {
+    max-width: none;
+  }
+
+  .admin-report-content {
+    max-width: 180px;
+  }
+}

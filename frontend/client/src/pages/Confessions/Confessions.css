@@ -1,0 +1,64 @@
+.confession-card {
+  margin-bottom: 14px;
+  padding: 18px;
+}
+
+.confession-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  background: var(--color-primary-light);
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  margin-bottom: 10px;
+}
+
+.confession-content {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 12px;
+  white-space: pre-wrap;
+}
+
+.confession-footer {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-top: 10px;
+  border-top: 1px solid var(--color-border);
+}
+
+.confession-like-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.confession-like-btn.liked {
+  color: var(--color-danger);
+}
+
+.confession-time {
+  font-size: 0.75rem;
+  color: var(--color-text-soft);
+  margin-left: auto;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 640px) {
+  .confession-card {
+    padding: 16px;
+  }
+}
