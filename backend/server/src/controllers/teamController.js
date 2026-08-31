@@ -1,5 +1,8 @@
 const Team = require("../models/Team");
+<<<<<<< HEAD
 const TeamPost = require("../models/TeamPost");
+=======
+>>>>>>> bdf963ed51860aae2ec63171c37f5a0cd46451e8
 
 const createTeam = async (req, res) => {
   try {
@@ -147,7 +150,10 @@ const deleteTeam = async (req, res) => {
       return res.status(403).json({ success: false, message: "Unauthorized." });
     }
 
+<<<<<<< HEAD
     await TeamPost.deleteMany({ team: team._id });
+=======
+>>>>>>> bdf963ed51860aae2ec63171c37f5a0cd46451e8
     await team.deleteOne();
 
     return res.status(200).json({ success: true, message: "Team deleted." });
@@ -157,6 +163,7 @@ const deleteTeam = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
 // =============================
 // Team Discussion Board (members only)
 // =============================
@@ -226,3 +233,6 @@ module.exports = {
   getTeamPosts,
   createTeamPost,
 };
+=======
+module.exports = { createTeam, getTeams, getTeam, joinTeam, leaveTeam, deleteTeam };
+>>>>>>> bdf963ed51860aae2ec63171c37f5a0cd46451e8

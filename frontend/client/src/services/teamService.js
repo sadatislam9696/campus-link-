@@ -29,6 +29,7 @@ export const deleteTeam = async (id) => {
   const res = await axios.delete(`/teams/${id}`);
   return res.data;
 };
+<<<<<<< HEAD
 
 export const getTeamPosts = async (id) => {
   const res = await axios.get(`/teams/${id}/posts`);
@@ -39,3 +40,5 @@ export const createTeamPost = async (id, content) => {
   const res = await axios.post(`/teams/${id}/posts`, { content });
   return res.data;
 };
+=======
+>>>>>>> bdf963ed51860aae2ec63171c37f5a0cd46451e8

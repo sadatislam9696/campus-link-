@@ -1,5 +1,6 @@
 const multer = require("multer");
 const path = require("path");
+<<<<<<< HEAD
 const fs = require("fs");
 
 // Ensure upload directory exists
@@ -24,6 +25,11 @@ const storage = multer.diskStorage({
     cb(null, fileName);
   },
 });
+=======
+
+// Vercel-er read-only disk environment-er jonno memoryStorage use kora hochche
+const storage = multer.memoryStorage();
+>>>>>>> bdf963ed51860aae2ec63171c37f5a0cd46451e8
 
 const fileFilter = (req, file, cb) => {
   const allowed = /jpg|jpeg|png|gif|webp/;
@@ -49,4 +55,8 @@ const upload = multer({
   },
 });
 
+<<<<<<< HEAD
 module.exports = upload;
+=======
+module.exports = upload;
+>>>>>>> bdf963ed51860aae2ec63171c37f5a0cd46451e8
