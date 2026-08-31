@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { AuthContext } from "../../context/AuthContext";
 import { getTeams, createTeam, joinTeam, leaveTeam, deleteTeam } from "../../services/teamService";
@@ -112,6 +113,7 @@ function CreateTeamModal({ onClose, onCreated }) {
 }
 
 function Teams() {
+  const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const [teams, setTeams] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -203,29 +205,41 @@ function Teams() {
                   {t.memberCount}/{t.maxMembers} members{t.isFull ? " · Full" : ""}
                 </span>
 
-                {t.creator._id === user.id ? (
-                  <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(t._id)}>
-                    Delete
-                  </button>
-                ) : t.isMember ? (
-                  <button
-                    type="button"
-                    className="btn btn-ghost btn-sm"
-                    disabled={busyId === t._id}
-                    onClick={() => handleLeave(t._id)}
-                  >
-                    Leave
-                  </button>
-                ) : (
-                  <button
-                    type="button"
-                    className="btn btn-primary btn-sm"
-                    disabled={busyId === t._id || t.isFull}
-                    onClick={() => handleJoin(t._id)}
-                  >
-                    {t.isFull ? "Full" : "Join"}
-                  </button>
-                )}
+                <div style={{ display: "flex", gap: 6 }}>
+                  {t.isMember && (
+                    <button
+                      type="button"
+                      className="btn btn-secondary btn-sm"
+                      onClick={() => navigate(`/teams/${t._id}`)}
+                    >
+                      Open
+                    </button>
+                  )}
+
+                  {t.creator._id === user.id ? (
+                    <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(t._id)}>
+                      Delete
+                    </button>
+                  ) : t.isMember ? (
+                    <button
+                      type="button"
+                      className="btn btn-ghost btn-sm"
+                      disabled={busyId === t._id}
+                      onClick={() => handleLeave(t._id)}
+                    >
+                      Leave
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      className="btn btn-primary btn-sm"
+                      disabled={busyId === t._id || t.isFull}
+                      onClick={() => handleJoin(t._id)}
+                    >
+                      {t.isFull ? "Full" : "Join"}
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           ))}
@@ -235,9 +249,9 @@ function Teams() {
       {showCreate && (
         <CreateTeamModal
           onClose={() => setShowCreate(false)}
-          onCreated={() => {
+          onCreated={(team) => {
             setShowCreate(false);
-            load();
+            navigate(`/teams/${team._id}`);
           }}
         />
       )}

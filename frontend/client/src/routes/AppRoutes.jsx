@@ -27,6 +27,7 @@ const Academics = lazy(() => import("../pages/Academics/Academics"));
 const Confessions = lazy(() => import("../pages/Confessions/Confessions"));
 const LostFound = lazy(() => import("../pages/LostFound/LostFound"));
 const Teams = lazy(() => import("../pages/Teams/Teams"));
+const TeamDetail = lazy(() => import("../pages/Teams/TeamDetail"));
 const Settings = lazy(() => import("../pages/Settings/Settings"));
 const Help = lazy(() => import("../pages/Help/Help"));
 const Terms = lazy(() => import("../pages/Terms/Terms"));
@@ -200,6 +201,17 @@ function AppRoutes() {
           <PrivateRoute>
             <Suspense fallback={<p className="empty-state">Loading...</p>}>
               <Teams />
+            </Suspense>
+          </PrivateRoute>
+        }
+      />
+
+      <Route
+        path="/teams/:id"
+        element={
+          <PrivateRoute>
+            <Suspense fallback={<p className="empty-state">Loading...</p>}>
+              <TeamDetail />
             </Suspense>
           </PrivateRoute>
         }
