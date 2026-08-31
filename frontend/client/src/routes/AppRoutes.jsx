@@ -27,10 +27,7 @@ const Academics = lazy(() => import("../pages/Academics/Academics"));
 const Confessions = lazy(() => import("../pages/Confessions/Confessions"));
 const LostFound = lazy(() => import("../pages/LostFound/LostFound"));
 const Teams = lazy(() => import("../pages/Teams/Teams"));
-<<<<<<< HEAD
 const TeamDetail = lazy(() => import("../pages/Teams/TeamDetail"));
-=======
->>>>>>> bdf963ed51860aae2ec63171c37f5a0cd46451e8
 const Settings = lazy(() => import("../pages/Settings/Settings"));
 const Help = lazy(() => import("../pages/Help/Help"));
 const Terms = lazy(() => import("../pages/Terms/Terms"));
@@ -210,7 +207,6 @@ function AppRoutes() {
       />
 
       <Route
-<<<<<<< HEAD
         path="/teams/:id"
         element={
           <PrivateRoute>
@@ -222,8 +218,6 @@ function AppRoutes() {
       />
 
       <Route
-=======
->>>>>>> bdf963ed51860aae2ec63171c37f5a0cd46451e8
         path="/settings"
         element={
           <PrivateRoute>

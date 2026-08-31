@@ -1,8 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-<<<<<<< HEAD
 import { useNavigate } from "react-router-dom";
-=======
->>>>>>> bdf963ed51860aae2ec63171c37f5a0cd46451e8
 
 import { AuthContext } from "../../context/AuthContext";
 import { getTeams, createTeam, joinTeam, leaveTeam, deleteTeam } from "../../services/teamService";
@@ -116,10 +113,7 @@ function CreateTeamModal({ onClose, onCreated }) {
 }
 
 function Teams() {
-<<<<<<< HEAD
   const navigate = useNavigate();
-=======
->>>>>>> bdf963ed51860aae2ec63171c37f5a0cd46451e8
   const { user } = useContext(AuthContext);
   const [teams, setTeams] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -211,7 +205,6 @@ function Teams() {
                   {t.memberCount}/{t.maxMembers} members{t.isFull ? " · Full" : ""}
                 </span>
 
-<<<<<<< HEAD
                 <div style={{ display: "flex", gap: 6 }}>
                   {t.isMember && (
                     <button
@@ -247,31 +240,6 @@ function Teams() {
                     </button>
                   )}
                 </div>
-=======
-                {t.creator._id === user.id ? (
-                  <button type="button" className="btn btn-danger btn-sm" onClick={() => handleDelete(t._id)}>
-                    Delete
-                  </button>
-                ) : t.isMember ? (
-                  <button
-                    type="button"
-                    className="btn btn-ghost btn-sm"
-                    disabled={busyId === t._id}
-                    onClick={() => handleLeave(t._id)}
-                  >
-                    Leave
-                  </button>
-                ) : (
-                  <button
-                    type="button"
-                    className="btn btn-primary btn-sm"
-                    disabled={busyId === t._id || t.isFull}
-                    onClick={() => handleJoin(t._id)}
-                  >
-                    {t.isFull ? "Full" : "Join"}
-                  </button>
-                )}
->>>>>>> bdf963ed51860aae2ec63171c37f5a0cd46451e8
               </div>
             </div>
           ))}
@@ -281,15 +249,9 @@ function Teams() {
       {showCreate && (
         <CreateTeamModal
           onClose={() => setShowCreate(false)}
-<<<<<<< HEAD
           onCreated={(team) => {
             setShowCreate(false);
             navigate(`/teams/${team._id}`);
-=======
-          onCreated={() => {
-            setShowCreate(false);
-            load();
->>>>>>> bdf963ed51860aae2ec63171c37f5a0cd46451e8
           }}
         />
       )}

@@ -4,7 +4,6 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-<<<<<<< HEAD
   build: {
     rollupOptions: {
       output: {
@@ -33,6 +32,4 @@ export default defineConfig({
       },
     },
   },
-=======
->>>>>>> bdf963ed51860aae2ec63171c37f5a0cd46451e8
 })
