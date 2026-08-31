@@ -1,4 +1,5 @@
 const Team = require("../models/Team");
+const TeamPost = require("../models/TeamPost");
 
 const createTeam = async (req, res) => {
   try {
@@ -146,6 +147,7 @@ const deleteTeam = async (req, res) => {
       return res.status(403).json({ success: false, message: "Unauthorized." });
     }
 
+    await TeamPost.deleteMany({ team: team._id });
     await team.deleteOne();
 
     return res.status(200).json({ success: true, message: "Team deleted." });
@@ -155,4 +157,72 @@ const deleteTeam = async (req, res) => {
   }
 };
 
-module.exports = { createTeam, getTeams, getTeam, joinTeam, leaveTeam, deleteTeam };
+// =============================
+// Team Discussion Board (members only)
+// =============================
+const getTeamPosts = async (req, res) => {
+  try {
+    const team = await Team.findById(req.params.id).select("members");
+
+    if (!team) {
+      return res.status(404).json({ success: false, message: "Team not found." });
+    }
+
+    if (!team.members.some((m) => m.toString() === req.user.id)) {
+      return res.status(403).json({ success: false, message: "Join the team to see its discussion." });
+    }
+
+    const posts = await TeamPost.find({ team: req.params.id })
+      .populate("author", "firstName lastName username avatar")
+      .sort({ createdAt: -1 });
+
+    return res.status(200).json({ success: true, posts });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+const createTeamPost = async (req, res) => {
+  try {
+    const { content } = req.body;
+
+    if (!content || !content.trim()) {
+      return res.status(400).json({ success: false, message: "Message cannot be empty." });
+    }
+
+    const team = await Team.findById(req.params.id).select("members");
+
+    if (!team) {
+      return res.status(404).json({ success: false, message: "Team not found." });
+    }
+
+    if (!team.members.some((m) => m.toString() === req.user.id)) {
+      return res.status(403).json({ success: false, message: "Join the team to post." });
+    }
+
+    const post = await TeamPost.create({
+      team: req.params.id,
+      author: req.user.id,
+      content: content.trim(),
+    });
+
+    const populated = await post.populate("author", "firstName lastName username avatar");
+
+    return res.status(201).json({ success: true, post: populated });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+module.exports = {
+  createTeam,
+  getTeams,
+  getTeam,
+  joinTeam,
+  leaveTeam,
+  deleteTeam,
+  getTeamPosts,
+  createTeamPost,
+};
